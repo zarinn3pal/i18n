@@ -10,7 +10,7 @@ Creates a new menu.
 
 ### Static Methods
 
-The `menu` class has the following static methods:
+The `Menu` class has the following static methods:
 
 #### `Menu.setApplicationMenu(menu)`
 
@@ -107,7 +107,7 @@ Inserts the `menuItem` to the `pos` position of the menu.
 
 ### Instance Events
 
-Objects created with `new Menu` emit the following events:
+Objects created with `new Menu` or returned by `Menu.buildFromTemplate` emit the following events:
 
 **Note:** Some events are only available on specific operating systems and are
 labeled as such.
@@ -139,11 +139,6 @@ A `MenuItem[]` array containing the menu's items.
 Each `Menu` consists of multiple [`MenuItem`](menu-item.md)s and each `MenuItem`
 can have a submenu.
 
-### Instance Events
-
-Objects created with `new Menu` or returned by `Menu.buildFromTemplate` emit
-the following events:
-
 ## Examples
 
 The `Menu` class is only available in the main process, but you can also use it
@@ -160,7 +155,7 @@ const { app, Menu } = require('electron')
 const template = [
   // { role: 'appMenu' }
   ...(process.platform === 'darwin' ? [{
-    label: app.getName(),
+    label: app.name,
     submenu: [
       { role: 'about' },
       { type: 'separator' },
@@ -245,7 +240,10 @@ const template = [
     submenu: [
       {
         label: 'Learn More',
-        click () { require('electron').shell.openExternalSync('https://electronjs.org') }
+        click: async () => {
+          const { shell } = require('electron')
+          await shell.openExternal('https://electronjs.org')
+        }
       }
     ]
   }
@@ -279,7 +277,6 @@ window.addEventListener('contextmenu', (e) => {
 </script>
 ```
 
-
 ## Notes on macOS Application Menu
 
 macOS has a completely different style of application menu from Windows and
@@ -287,7 +284,7 @@ Linux. Here are some notes on making your app's menu more native-like.
 
 ### Standard Menus
 
-On macOS there are many system-defined standard menus, like the `Services` and
+On macOS there are many system-defined standard menus, like the [`Services`](https://developer.apple.com/documentation/appkit/nsapplication/1428608-servicesmenu?language=objc) and
 `Windows` menus. To make your menu a standard menu, you should set your menu's
 `role` to one of the following and Electron will recognize them and make them
 become standard menus:

@@ -11,10 +11,10 @@ import { sync as mkdir } from 'make-dir'
 import * as path from 'path'
 import { execSync } from 'child_process'
 import * as Octokit from '@octokit/rest';
-// @ts-ignore
-const _package: Record<string, string> = require('../package.json')
+const packageJson: Record<string, string> = require('../package.json')
 const electronDocs = require('electron-docs')
 const currentEnglishBasepath = path.join(__dirname, '..', 'content', 'current', 'en-US')
+const englishBasepath = path.join(__dirname, '..', 'content', 'notCurrent', 'en-US')
 
 const NUM_SUPPORTED_VERSIONS = 4
 
@@ -40,14 +40,21 @@ main().catch((err: Error) => {
   process.exit(1)
 })
 
-async function main() {
+async function delContent () {
   await del(currentEnglishBasepath)
+  await del(englishBasepath)
+}
+
+async function main() {
+  await delContent()
   await getSupportedBranches()
   await fetchRelease()
   await fetchAPIDocsFromLatestStableRelease()
+  await fetchAPIDocsFromSupportedVersions()
   await fetchApiData()
   await getMasterBranchCommit()
   await fetchTutorialsFromMasterBranch()
+  await fetchTutorialsFromSupportedBranch()
   await fetchWebsiteContent()
 }
 
@@ -100,6 +107,18 @@ async function fetchAPIDocsFromLatestStableRelease () {
   return Promise.resolve()
 }
 
+async function fetchAPIDocsFromSupportedVersions () {
+  for (const version of packageJson.supportedVersions) {
+    if (version.includes('5-0-x')) continue
+    console.log(`Fetching API docs from electron/electron#${version}`)
+    const docs = await electronDocs(version)
+
+    docs
+      .filter((doc: IElectronDocsResponse) => doc.filename.startsWith('api/'))
+      .forEach(writeOtherDoc)
+  }
+}
+
 async function fetchApiData () {
   console.log(`Fetching API definitions from electron/electron#${release.tag_name}`)
 
@@ -142,6 +161,21 @@ async function fetchTutorialsFromMasterBranch () {
   return Promise.resolve()
 }
 
+async function fetchTutorialsFromSupportedBranch () {
+  for (const version of packageJson.supportedVersions) {
+    if (version.includes('5-0-x')) continue
+    console.log(`Fetching tutorial docs from electron/electron#${version}`)
+    const docs = await electronDocs(version)
+
+    docs
+      .filter((doc: IElectronDocsResponse) => !doc.filename.startsWith('api/'))
+      .filter((doc: IElectronDocsResponse) => !doc.filename.includes('images/'))
+      .forEach(writeOtherDoc)
+  }
+
+  return Promise.resolve()
+}
+
 async function fetchWebsiteContent () {
   console.log(`Fetching locale.yml from electron/electronjs.org#master`)
 
@@ -162,6 +196,13 @@ function writeDoc (doc: IElectronDocsResponse) {
   mkdir(path.dirname(filename))
   fs.writeFileSync(filename, doc.markdown_content)
   // console.log('   ' + path.relative(englishBasepath, filename))
+}
+
+function writeOtherDoc (doc: IElectronDocsResponse) {
+  const filename = path.join(englishBasepath, 'docs', doc.filename)
+  mkdir(path.dirname(filename))
+  fs.writeFileSync(filename, doc.markdown_content)
+  console.log('   ' + path.relative(englishBasepath, filename))
 }
 
 function writeToPackageJSON (key: string, value: string | Array<string>) {
