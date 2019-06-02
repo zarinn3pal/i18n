@@ -26,9 +26,8 @@ following projects:
 
 Or use a 3rd party hosted solution:
 
-* [Backtrace](https://backtrace.io/electron/)
+* [Backtrace I/O](https://backtrace.io/electron/)
 * [Sentry](https://docs.sentry.io/clients/electron)
-* [BugSplat](https://www.bugsplat.com/docs/platforms/electron)
 
 Crash reports are saved locally in an application-specific temp directory folder.
 For a `productName` of `YourName`, crash reports will be stored in a folder
@@ -45,12 +44,13 @@ The `crashReporter` module has the following methods:
 * `options` Object
   * `companyName` String
   * `submitURL` String - URL that crash reports will be sent to as POST.
-  * `productName` String (optional) - Defaults to `app.name`.
-  * `uploadToServer` Boolean (optional) - Whether crash reports should be sent to the server. Default is `true`.
+  * `productName` String (optional) - Defaults to `app.getName()`.
+  * `uploadToServer` Boolean (optional) - Whether crash reports should be sent to the server
+    Default is `true`.
   * `ignoreSystemCrashHandler` Boolean (optional) - Default is `false`.
   * `extra` Object (optional) - An object you can define that will be sent along with the
     report. Only string properties are sent correctly. Nested objects are not
-    supported. When using Windows, the property names and values must be fewer than 64 characters.
+    supported and the property names and values must be less than 64 characters long.
   * `crashesDirectory` String (optional) - Directory to store the crashreports temporarily (only used when the crash reporter is started via `process.crashReporter.start`).
 
 You are required to call this method before using any other `crashReporter` APIs
@@ -62,13 +62,13 @@ Therefore, to collect crash reports from them, use `process.crashReporter.start`
 along with an additional one called `crashesDirectory` that should point to a directory to store the crash
 reports temporarily. You can test this out by calling `process.crash()` to crash the child process.
 
-**Note:** If you need send additional/updated `extra` parameters after your
-first call `start` you can call `addExtraParameter` on macOS or call `start`
-again with the new/updated `extra` parameters on Linux and Windows.
-
 **Note:** To collect crash reports from child process in Windows, you need to add this extra code as well.
 This will start the process that will monitor and send the crash reports. Replace `submitURL`, `productName`
 and `crashesDirectory` with appropriate values.
+
+**Note:** If you need send additional/updated `extra` parameters after your
+first call `start` you can call `addExtraParameter` on macOS or call `start`
+again with the new/updated `extra` parameters on Linux and Windows.
 
 ```js
 const args = [

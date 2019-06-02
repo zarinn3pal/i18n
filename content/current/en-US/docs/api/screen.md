@@ -2,10 +2,13 @@
 
 > Retrieve information about screen size, displays, cursor position, etc.
 
-Process: [Main](../glossary.md#main-process)
+Process: [Main](../glossary.md#main-process), [Renderer](../glossary.md#renderer-process)
 
-This module cannot be used until the `ready` event of the `app`
+You cannot require or use this module until the `ready` event of the `app`
 module is emitted.
+
+In the renderer process context it depends on the [`remote`](remote.md) module,
+it is therefore not available when this module is disabled.
 
 `screen` is an [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter).
 
@@ -15,11 +18,13 @@ property, so writing `let { screen } = require('electron')` will not work.
 An example of creating a window that fills the whole screen:
 
 ```javascript
-const { app, BrowserWindow, screen } = require('electron')
+const electron = require('electron')
+const { app, BrowserWindow } = electron
 
 let win
+
 app.on('ready', () => {
-  const { width, height } = screen.getPrimaryDisplay().workAreaSize
+  const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
   win = new BrowserWindow({ width, height })
   win.loadURL('https://github.com')
 })
@@ -28,12 +33,13 @@ app.on('ready', () => {
 Another example of creating a window in the external display:
 
 ```javascript
-const { app, BrowserWindow, screen } = require('electron')
+const electron = require('electron')
+const { app, BrowserWindow } = require('electron')
 
 let win
 
 app.on('ready', () => {
-  let displays = screen.getAllDisplays()
+  let displays = electron.screen.getAllDisplays()
   let externalDisplay = displays.find((display) => {
     return display.bounds.x !== 0 || display.bounds.y !== 0
   })

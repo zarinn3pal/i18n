@@ -100,7 +100,7 @@ The `webview` tag has the following attributes:
 <webview src="https://www.github.com/"></webview>
 ```
 
-A `String` representing the visible URL. Writing to this attribute initiates top-level
+Returns the visible URL. Writing to this attribute initiates top-level
 navigation.
 
 Assigning `src` its own value will reload the current page.
@@ -108,13 +108,26 @@ Assigning `src` its own value will reload the current page.
 The `src` attribute can also accept data URLs, such as
 `data:text/plain,Hello, world!`.
 
+### `autosize`
+
+```html
+<webview src="https://www.github.com/" autosize minwidth="576" minheight="432"></webview>
+```
+
+When this attribute is present the `webview` container will automatically resize
+within the bounds specified by the attributes `minwidth`, `minheight`,
+`maxwidth`, and `maxheight`. These constraints do not impact the `webview`
+unless `autosize` is enabled. When `autosize` is enabled, the `webview`
+container size cannot be less than the minimum values or greater than the
+maximum.
+
 ### `nodeintegration`
 
 ```html
 <webview src="http://www.google.com/" nodeintegration></webview>
 ```
 
-A `Boolean`. When this attribute is present the guest page in `webview` will have node
+When this attribute is present the guest page in `webview` will have node
 integration and can use node APIs like `require` and `process` to access low
 level system resources. Node integration is disabled by default in the guest
 page.
@@ -125,7 +138,7 @@ page.
 <webview src="http://www.google.com/" nodeintegrationinsubframes></webview>
 ```
 
-A `Boolean` for the experimental option for enabling NodeJS support in sub-frames such as iframes
+Experimental option for enabling NodeJS support in sub-frames such as iframes
 inside the `webview`. All your preloads will load for every iframe, you can
 use `process.isMainFrame` to determine if you are in the main frame or not.
 This option is disabled by default in the guest page.
@@ -136,8 +149,8 @@ This option is disabled by default in the guest page.
 <webview src="http://www.google.com/" enableremotemodule="false"></webview>
 ```
 
-A `Boolean`. When this attribute is `false` the guest page in `webview` will not have access
-to the [`remote`](remote.md) module. The remote module is available by default.
+When this attribute is `false` the guest page in `webview` will not have access
+to the [`remote`](remote.md) module. The remote module is avaiable by default.
 
 ### `plugins`
 
@@ -145,7 +158,7 @@ to the [`remote`](remote.md) module. The remote module is available by default.
 <webview src="https://www.github.com/" plugins></webview>
 ```
 
-A `Boolean`. When this attribute is present the guest page in `webview` will be able to use
+When this attribute is present the guest page in `webview` will be able to use
 browser plugins. Plugins are disabled by default.
 
 ### `preload`
@@ -154,16 +167,13 @@ browser plugins. Plugins are disabled by default.
 <webview src="https://www.github.com/" preload="./test.js"></webview>
 ```
 
-A `String` that specifies a script that will be loaded before other scripts run in the guest
+Specifies a script that will be loaded before other scripts run in the guest
 page. The protocol of script's URL must be either `file:` or `asar:`, because it
 will be loaded by `require` in guest page under the hood.
 
 When the guest page doesn't have node integration this script will still have
 access to all Node APIs, but global objects injected by Node will be deleted
 after this script has finished executing.
-
-**Note:** For security reasons, preload scripts can only be loaded from
-a subpath of the [app path](app.md#appgetapppath).
 
 **Note:** This option will be appear as `preloadURL` (not `preload`) in
 the `webPreferences` specified to the `will-attach-webview` event.
@@ -174,7 +184,7 @@ the `webPreferences` specified to the `will-attach-webview` event.
 <webview src="https://www.github.com/" httpreferrer="http://cheng.guru"></webview>
 ```
 
-A `String` that sets the referrer URL for the guest page.
+Sets the referrer URL for the guest page.
 
 ### `useragent`
 
@@ -182,7 +192,7 @@ A `String` that sets the referrer URL for the guest page.
 <webview src="https://www.github.com/" useragent="Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko"></webview>
 ```
 
-A `String` that sets the user agent for the guest page before the page is navigated to. Once the
+Sets the user agent for the guest page before the page is navigated to. Once the
 page is loaded, use the `setUserAgent` method to change the user agent.
 
 ### `disablewebsecurity`
@@ -191,7 +201,7 @@ page is loaded, use the `setUserAgent` method to change the user agent.
 <webview src="https://www.github.com/" disablewebsecurity></webview>
 ```
 
-A `Boolean`. When this attribute is present the guest page will have web security disabled.
+When this attribute is present the guest page will have web security disabled.
 Web security is enabled by default.
 
 ### `partition`
@@ -201,7 +211,7 @@ Web security is enabled by default.
 <webview src="https://electronjs.org" partition="electron"></webview>
 ```
 
-A `String` that sets the session used by the page. If `partition` starts with `persist:`, the
+Sets the session used by the page. If `partition` starts with `persist:`, the
 page will use a persistent session available to all pages in the app with the
 same `partition`. if there is no `persist:` prefix, the page will use an
 in-memory session. By assigning the same `partition`, multiple pages can share
@@ -218,7 +228,7 @@ value will fail with a DOM exception.
 <webview src="https://www.github.com/" allowpopups></webview>
 ```
 
-A `Boolean`. When this attribute is present the guest page will be allowed to open new
+When this attribute is present the guest page will be allowed to open new
 windows. Popups are disabled by default.
 
 ### `webpreferences`
@@ -227,7 +237,7 @@ windows. Popups are disabled by default.
 <webview src="https://github.com" webpreferences="allowRunningInsecureContent, javascript=no"></webview>
 ```
 
-A `String` which is a comma separated list of strings which specifies the web preferences to be set on the webview.
+A list of strings which specifies the web preferences to be set on the webview, separated by `,`.
 The full list of supported preference strings can be found in [BrowserWindow](browser-window.md#new-browserwindowoptions).
 
 The string follows the same format as the features string in `window.open`.
@@ -241,7 +251,7 @@ Special values `yes` and `1` are interpreted as `true`, while `no` and `0` are i
 <webview src="https://www.github.com/" enableblinkfeatures="PreciseMemoryInfo, CSSVariables"></webview>
 ```
 
-A `String` which is a list of strings which specifies the blink features to be enabled separated by `,`.
+A list of strings which specifies the blink features to be enabled separated by `,`.
 The full list of supported feature strings can be found in the
 [RuntimeEnabledFeatures.json5][runtime-enabled-features] file.
 
@@ -251,7 +261,7 @@ The full list of supported feature strings can be found in the
 <webview src="https://www.github.com/" disableblinkfeatures="PreciseMemoryInfo, CSSVariables"></webview>
 ```
 
-A `String` which is a list of strings which specifies the blink features to be disabled separated by `,`.
+A list of strings which specifies the blink features to be disabled separated by `,`.
 The full list of supported feature strings can be found in the
 [RuntimeEnabledFeatures.json5][runtime-enabled-features] file.
 
@@ -381,13 +391,12 @@ Returns `String` - The user agent for guest page.
 
 Injects CSS into the guest page.
 
-### `<webview>.executeJavaScript(code[, userGesture])`
+### `<webview>.executeJavaScript(code[, userGesture, callback])`
 
 * `code` String
 * `userGesture` Boolean (optional) - Default `false`.
-
-Returns `Promise<any>` - A promise that resolves with the result of the executed code
-or is rejected if the result of the code is a rejected promise.
+* `callback` Function (optional) - Called after script has been executed.
+  * `result` Any
 
 Evaluates `code` in page. If `userGesture` is set, it will create the user
 gesture context in the page. HTML APIs like `requestFullScreen`, which require
@@ -415,10 +424,6 @@ Returns `Boolean` - Whether DevTools window of guest page is focused.
 * `y` Integer
 
 Starts inspecting element at position (`x`, `y`) of guest page.
-
-### `<webview>.inspectSharedWorker()`
-
-Opens the DevTools for the shared worker context present in the guest page.
 
 ### `<webview>.inspectServiceWorker()`
 
@@ -533,7 +538,7 @@ Stops any `findInPage` request for the `webview` with the provided `action`.
 
 Prints `webview`'s web page. Same as `webContents.print([options])`.
 
-### `<webview>.printToPDF(options)`
+### `<webview>.printToPDF(options, callback)`
 
 * `options` Object
   * `marginsType` Integer (optional) - Specifies the type of margins to use. Uses 0 for
@@ -544,16 +549,29 @@ Prints `webview`'s web page. Same as `webContents.print([options])`.
   * `printBackground` Boolean (optional) - Whether to print CSS backgrounds.
   * `printSelectionOnly` Boolean (optional) - Whether to print selection only.
   * `landscape` Boolean (optional) - `true` for landscape, `false` for portrait.
+* `callback` Function
+  * `error` Error
+  * `data` Buffer
 
-Returns `Promise<Buffer>` - Resolves with the generated PDF data.
+Prints `webview`'s web page as PDF, Same as `webContents.printToPDF(options, callback)`.
 
-Prints `webview`'s web page as PDF, Same as `webContents.printToPDF(options)`.
+### `<webview>.capturePage([rect, ]callback)`
+
+* `rect` [Rectangle](structures/rectangle.md) (optional) - The bounds to capture
+* `callback` Function
+  * `image` [NativeImage](native-image.md)
+
+Captures a snapshot of the page within `rect`. Upon completion `callback` will
+be called with `callback(image)`. The `image` is an instance of [NativeImage](native-image.md)
+that stores data of the snapshot. Omitting `rect` will capture the whole visible page.
+
+**[Deprecated Soon](promisification.md)**
 
 ### `<webview>.capturePage([rect])`
 
 * `rect` [Rectangle](structures/rectangle.md) (optional) - The area of the page to be captured.
 
-Returns `Promise<NativeImage>` - Resolves with a [NativeImage](native-image.md)
+* Returns `Promise<NativeImage>` - Resolves with a [NativeImage](native-image.md)
 
 Captures a snapshot of the page within `rect`. Omitting `rect` will capture the whole visible page.
 
@@ -628,11 +646,7 @@ this `webview`.
 It depends on the [`remote`](remote.md) module,
 it is therefore not available when this module is disabled.
 
-### `<webview>.getWebContentsId()`
-
-Returns `Number` - The WebContents ID of this `webview`.
-
-## DOM Events
+## DOM events
 
 The following DOM events are available to the `webview` tag:
 
@@ -774,10 +788,10 @@ The following example code opens the new url in system's default browser.
 const { shell } = require('electron')
 const webview = document.querySelector('webview')
 
-webview.addEventListener('new-window', async (e) => {
+webview.addEventListener('new-window', (e) => {
   const protocol = require('url').parse(e.url).protocol
   if (protocol === 'http:' || protocol === 'https:') {
-    await shell.openExternal(e.url)
+    shell.openExternalSync(e.url)
   }
 })
 ```

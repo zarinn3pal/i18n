@@ -71,6 +71,7 @@ images/
 └── icon@3x.png
 ```
 
+
 ```javascript
 const { Tray } = require('electron')
 let appIcon = new Tray('/Users/somebody/images/icon.png')
@@ -136,19 +137,6 @@ let image = nativeImage.createFromPath('/Users/somebody/images/icon.png')
 console.log(image)
 ```
 
-### `nativeImage.createFromBitmap(buffer, options)`
-
-* `buffer` [Buffer][buffer]
-* `options` Object
-  * `width` Integer
-  * `height` Integer
-  * `scaleFactor` Double (optional) - Defaults to 1.0.
-
-Returns `NativeImage`
-
-Creates a new `NativeImage` instance from `buffer` that contains the raw bitmap
-pixel data returned by `toBitmap()`. The specific format is platform-dependent.
-
 ### `nativeImage.createFromBuffer(buffer[, options])`
 
 * `buffer` [Buffer][buffer]
@@ -159,7 +147,7 @@ pixel data returned by `toBitmap()`. The specific format is platform-dependent.
 
 Returns `NativeImage`
 
-Creates a new `NativeImage` instance from `buffer`. Tries to decode as PNG or JPEG first.
+Creates a new `NativeImage` instance from `buffer`.
 
 ### `nativeImage.createFromDataURL(dataURL)`
 
@@ -177,7 +165,7 @@ Creates a new `NativeImage` instance from `dataURL`.
 Returns `NativeImage`
 
 Creates a new `NativeImage` instance from the NSImage that maps to the
-given image name. See [`System Icons`](https://developer.apple.com/design/human-interface-guidelines/macos/icons-and-images/system-icons/)
+given image name. See [`NSImageName`](https://developer.apple.com/documentation/appkit/nsimagename?language=objc)
 for a list of possible values.
 
 The `hslShift` is applied to the image with the following rules
@@ -222,7 +210,7 @@ Returns `Buffer` - A [Buffer][buffer] that contains the image's `PNG` encoded da
 
 #### `image.toJPEG(quality)`
 
-* `quality` Integer - Between 0 - 100.
+* `quality` Integer (**required**) - Between 0 - 100.
 
 Returns `Buffer` - A [Buffer][buffer] that contains the image's `JPEG` encoded data.
 
@@ -275,13 +263,9 @@ Returns [`Size`](structures/size.md)
 
 Marks the image as a template image.
 
-**[Deprecated](modernization/property-updates.md)**
-
 #### `image.isTemplateImage()`
 
 Returns `Boolean` - Whether the image is a template image.
-
-**[Deprecated](modernization/property-updates.md)**
 
 #### `image.crop(rect)`
 
@@ -327,11 +311,3 @@ to explicitly add different scale factor representations to an image. This
 can be called on empty images.
 
 [buffer]: https://nodejs.org/api/buffer.html#buffer_class_buffer
-
-## Properties
-
-### `nativeImage.isMacTemplateImage` _macOS_
-
-A `Boolean` property that determines whether the image is considered a [template image](https://developer.apple.com/documentation/appkit/nsimage/1520017-template).
-
-Please note that this property only has an effect on macOS.

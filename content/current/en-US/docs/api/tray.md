@@ -70,9 +70,11 @@ The `Tray` module emits the following events:
 
 #### Event: 'click'
 
-Returns:
-
-* `event` [KeyboardEvent](structures/keyboard-event.md)
+* `event` Event
+  * `altKey` Boolean
+  * `shiftKey` Boolean
+  * `ctrlKey` Boolean
+  * `metaKey` Boolean
 * `bounds` [Rectangle](structures/rectangle.md) - The bounds of tray icon.
 * `position` [Point](structures/point.md) - The position of the event.
 
@@ -80,18 +82,22 @@ Emitted when the tray icon is clicked.
 
 #### Event: 'right-click' _macOS_ _Windows_
 
-Returns:
-
-* `event` [KeyboardEvent](structures/keyboard-event.md)
+* `event` Event
+  * `altKey` Boolean
+  * `shiftKey` Boolean
+  * `ctrlKey` Boolean
+  * `metaKey` Boolean
 * `bounds` [Rectangle](structures/rectangle.md) - The bounds of tray icon.
 
 Emitted when the tray icon is right clicked.
 
 #### Event: 'double-click' _macOS_ _Windows_
 
-Returns:
-
-* `event` [KeyboardEvent](structures/keyboard-event.md)
+* `event` Event
+  * `altKey` Boolean
+  * `shiftKey` Boolean
+  * `ctrlKey` Boolean
+  * `metaKey` Boolean
 * `bounds` [Rectangle](structures/rectangle.md) - The bounds of tray icon.
 
 Emitted when the tray icon is double clicked.
@@ -115,16 +121,12 @@ Emitted when any dragged items are dropped on the tray icon.
 
 #### Event: 'drop-files' _macOS_
 
-Returns:
-
 * `event` Event
 * `files` String[] - The paths of the dropped files.
 
 Emitted when dragged files are dropped in the tray icon.
 
 #### Event: 'drop-text' _macOS_
-
-Returns:
 
 * `event` Event
 * `text` String - the dropped text string.
@@ -145,27 +147,33 @@ Emitted when a drag operation ends on the tray or ends at another location.
 
 #### Event: 'mouse-enter' _macOS_
 
-Returns:
-
-* `event` [KeyboardEvent](structures/keyboard-event.md)
+* `event` Event
+  * `altKey` Boolean
+  * `shiftKey` Boolean
+  * `ctrlKey` Boolean
+  * `metaKey` Boolean
 * `position` [Point](structures/point.md) - The position of the event.
 
 Emitted when the mouse enters the tray icon.
 
 #### Event: 'mouse-leave' _macOS_
 
-Returns:
-
-* `event` [KeyboardEvent](structures/keyboard-event.md)
+* `event` Event
+  * `altKey` Boolean
+  * `shiftKey` Boolean
+  * `ctrlKey` Boolean
+  * `metaKey` Boolean
 * `position` [Point](structures/point.md) - The position of the event.
 
 Emitted when the mouse exits the tray icon.
 
 #### Event: 'mouse-move' _macOS_
 
-Returns:
-
-* `event` [KeyboardEvent](structures/keyboard-event.md)
+* `event` Event
+  * `altKey` Boolean
+  * `shiftKey` Boolean
+  * `ctrlKey` Boolean
+  * `metaKey` Boolean
 * `position` [Point](structures/point.md) - The position of the event.
 
 Emitted when the mouse moves in the tray icon.
@@ -200,11 +208,7 @@ Sets the hover text for this tray icon.
 
 * `title` String
 
-Sets the title displayed next to the tray icon in the status bar (Support ANSI colors).
-
-#### `tray.getTitle()` _macOS_
-
-Returns `String` - the title displayed next to the tray icon in the status bar
+Sets the title displayed aside of the tray icon in the status bar (Support ANSI colors).
 
 #### `tray.setHighlightMode(mode)` _macOS_
 

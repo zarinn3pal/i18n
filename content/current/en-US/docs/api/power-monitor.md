@@ -4,17 +4,17 @@
 
 Process: [Main](../glossary.md#main-process)
 
-
-This module cannot be used until the `ready` event of the `app`
+You cannot require or use this module until the `ready` event of the `app`
 module is emitted.
 
 For example:
 
 ```javascript
-const { app, powerMonitor } = require('electron')
+const electron = require('electron')
+const { app } = electron
 
 app.on('ready', () => {
-  powerMonitor.on('suspend', () => {
+  electron.powerMonitor.on('suspend', () => {
     console.log('The system is going to sleep')
   })
 })
@@ -59,17 +59,20 @@ Emitted as soon as the systems screen is unlocked.
 
 The `powerMonitor` module has the following methods:
 
-### `powerMonitor.getSystemIdleState(idleThreshold)`
+#### `powerMonitor.querySystemIdleState(idleThreshold, callback)`
 
 * `idleThreshold` Integer
-
-Returns `String` - The system's current state. Can be `active`, `idle`, `locked` or `unknown`.
+* `callback` Function
+  * `idleState` String - Can be `active`, `idle`, `locked` or `unknown`
 
 Calculate the system idle state. `idleThreshold` is the amount of time (in seconds)
-before considered idle.  `locked` is available on supported systems only.
+before considered idle. `callback` will be called synchronously on some systems
+and with an `idleState` argument that describes the system's state. `locked` is
+available on supported systems only.
 
-### `powerMonitor.getSystemIdleTime()`
+#### `powerMonitor.querySystemIdleTime(callback)`
 
-Returns `Integer` - Idle time in seconds
+* `callback` Function
+  * `idleTime` Integer - Idle time in seconds
 
 Calculate system idle time in seconds.
