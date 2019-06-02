@@ -11,8 +11,10 @@ import { sync as mkdir } from 'make-dir'
 import * as path from 'path'
 import { execSync } from 'child_process'
 import * as Octokit from '@octokit/rest';
+// @ts-ignore
+const _package: Record<string, string> = require('../package.json')
 const electronDocs = require('electron-docs')
-const englishBasepath = path.join(__dirname, '..', 'content', 'en-US')
+const currentEnglishBasepath = path.join(__dirname, '..', 'content', 'current', 'en-US')
 
 const NUM_SUPPORTED_VERSIONS = 4
 
@@ -39,7 +41,7 @@ main().catch((err: Error) => {
 })
 
 async function main() {
-  await del(englishBasepath)
+  await del(currentEnglishBasepath)
   await getSupportedBranches()
   await fetchRelease()
   await fetchAPIDocsFromLatestStableRelease()
@@ -109,9 +111,9 @@ async function fetchApiData () {
 
   const response = await got(asset.browser_download_url, { json: true })
   const apis = response.body
-  const filename = path.join(englishBasepath, 'electron-api.json')
+  const filename = path.join(currentEnglishBasepath, 'electron-api.json')
   mkdir(path.dirname(filename))
-  console.log(`Writing ${path.relative(englishBasepath, filename)} (without changes)`)
+  console.log(`Writing ${path.relative(currentEnglishBasepath, filename)} (without changes)`)
   fs.writeFileSync(filename, JSON.stringify(apis, null, 2))
   return Promise.resolve(apis)
 }
@@ -146,9 +148,9 @@ async function fetchWebsiteContent () {
   const url = 'https://rawgit.com/electron/electronjs.org/master/data/locale.yml'
   const response = await got(url)
   const content = response.body
-  const websiteFile = path.join(englishBasepath, 'website', `locale.yml`)
+  const websiteFile = path.join(currentEnglishBasepath, 'website', `locale.yml`)
   mkdir(path.dirname(websiteFile))
-  console.log(`Writing ${path.relative(englishBasepath, websiteFile)}`)
+  console.log(`Writing ${path.relative(currentEnglishBasepath, websiteFile)}`)
   fs.writeFileSync(websiteFile, content)
   return Promise.resolve()
 }
@@ -156,7 +158,7 @@ async function fetchWebsiteContent () {
 // Utility functions
 
 function writeDoc (doc: IElectronDocsResponse) {
-  const filename = path.join(englishBasepath, 'docs', doc.filename)
+  const filename = path.join(currentEnglishBasepath, 'docs', doc.filename)
   mkdir(path.dirname(filename))
   fs.writeFileSync(filename, doc.markdown_content)
   // console.log('   ' + path.relative(englishBasepath, filename))

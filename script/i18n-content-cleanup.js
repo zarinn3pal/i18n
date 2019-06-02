@@ -6,7 +6,7 @@ const walk = require('walk-sync')
 const rimraf = require('rimraf').sync
 const allStats = require('../stats.json')
 
-const basePath = path.join(__dirname, '..', 'content')
+const basePath = path.join(__dirname, '..', 'content', 'current')
 const contentPath = (lang) => path.join(basePath, lang, 'docs')
 
 const locales = fs.readdirSync(basePath)
