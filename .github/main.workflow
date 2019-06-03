@@ -1,5 +1,5 @@
 workflow "Update source content" {
-  on = "push"
+  on = "schedule(0 */6 * * *)"
   resolves = ["Fetch latest source content"]
 }
 
