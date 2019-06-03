@@ -13,6 +13,7 @@ set -o nounset    # fail on unset variables
 
 git clone "https://electron-bot:$GH_TOKEN@github.com/electron/i18n" module
 cd module
+git checkout hashi-the-debugger
 npm ci
 npm run collect
 npm run content-cleanup
@@ -31,4 +32,4 @@ git config user.email electron@github.com
 git config user.name electron-bot
 git add .
 git commit -am "feat: update source content"
-git pull --rebase && git push origin master --follow-tags
+git pull --rebase && git push origin hashi-the-debugger --follow-tags
