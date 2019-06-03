@@ -18,7 +18,7 @@ const remark = require('remark')
 const links = require('remark-inline-links')
 const parseElectronGlossary = require('../lib/parse-electron-glossary')
 
-const contentDir = path.join(__dirname, '../content')
+const contentDir = path.join(__dirname, '../content/current')
 const cheerio = require('cheerio')
 const categoryNames = {
   api: 'API',
