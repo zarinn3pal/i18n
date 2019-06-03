@@ -52,9 +52,9 @@ async function delContent (branches: Array<string>) {
 }
 
 async function main() {
-  await getSupportedBranches()
-  await delContent(packageJson.supportedVersions)
   await fetchRelease()
+  await getSupportedBranches(release.tag_name)
+  await delContent(packageJson.supportedVersions)
   await fetchAPIDocsFromLatestStableRelease()
   await fetchAPIDocsFromSupportedVersions()
   await fetchApiData()
@@ -64,8 +64,10 @@ async function main() {
   await fetchWebsiteContent()
 }
 
-async function getSupportedBranches() {
+async function getSupportedBranches(current: string) {
   console.log(`Fetching latest ${NUM_SUPPORTED_VERSIONS} supported versions`)
+  // TODO: all fine 🔥?
+  const currentVersion = current.slice(1, 6).replace(/\./, '-').replace(/\.[0-9]/, '-x')
 
   const resp = await github.repos.listBranches({
     owner: 'electron',
@@ -80,7 +82,7 @@ async function getSupportedBranches() {
 
   const filtered: Record<string, string> = {}
   branches.sort().forEach(branch => filtered[branch.charAt(0)]= branch)
-  const filteredBranches = Object.values(filtered).slice(-NUM_SUPPORTED_VERSIONS)
+  const filteredBranches = Object.values(filtered).slice(-NUM_SUPPORTED_VERSIONS).filter(arr => arr !== currentVersion)
 
   // TODO: remove current branch
   writeToPackageJSON('supportedVersions', filteredBranches)
