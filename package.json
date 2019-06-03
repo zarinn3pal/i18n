@@ -32,7 +32,7 @@
     "locale-code": "^2.0.1",
     "lodash": "^4.17.4",
     "make-dir": "^3.0.0",
-    "make-promises-safe": "^4.0.0",
+    "make-promises-safe": "^5.0.0",
     "match-words": "^1.0.0",
     "mocha": "^6.1.4",
     "npm-run-all": "^4.1.2",
@@ -67,10 +67,7 @@
     "automerge": "ts-node ./script/automerge.ts"
   },
   "electronLatestStableTag": "v5.0.2",
-  "electronMasterBranchCommit": "18acda7888de459b3a8f0b16f5dc3c03f357513f",
-  "engines": {
-    "node": ">=10"
-  },
+  "electronMasterBranchCommit": "0b25176893f10b8de19f912205bdc3750efe991d",
   "supportedVersions": [
     "3-1-x",
     "4-2-x",
