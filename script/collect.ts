@@ -40,6 +40,18 @@ main().catch((err: Error) => {
   process.exit(1)
 })
 
+async function delUnsupportedBranches (versions: Array<string>) {
+  const folders = fs.readdirSync('content')
+  if (folders !== versions) {
+    versions.push('current')
+    const difference = folders.filter(x => !versions.includes(x)).toString()
+    del(difference)
+    versions.filter(arr => arr !== 'current')
+  }
+
+  return Promise.resolve()
+}
+
 async function delContent (branches: Array<string>) {
   console.log('Deleting content')
 
@@ -54,6 +66,7 @@ async function delContent (branches: Array<string>) {
 async function main() {
   await fetchRelease()
   await getSupportedBranches(release.tag_name)
+  await delUnsupportedBranches(packageJson.supportedVersions)
   await delContent(packageJson.supportedVersions)
   await fetchAPIDocsFromLatestStableRelease()
   await fetchAPIDocsFromSupportedVersions()
