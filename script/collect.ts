@@ -54,18 +54,24 @@ async function main() {
   await fetchWebsiteContent()
 }
 
+/**
+ * Removes unsuppored branch folder from content dir.
+ */
 async function delUnsupportedBranches (versions: Array<string>) {
   const folders = fs.readdirSync('content')
   if (folders !== versions) {
     versions.push('current')
     const difference = folders.filter(x => !versions.includes(x)).toString()
-    del(difference)
-    versions.filter(arr => arr !== 'current')
+    del(path.join(__dirname, '..', 'content', difference))
+    versions.pop()
   }
 
   return Promise.resolve()
 }
 
+/**
+ * Removes base content folder for rewriting.
+ */
 async function delContent (branches: Array<string>) {
   console.log('Deleting content')
 
@@ -77,6 +83,12 @@ async function delContent (branches: Array<string>) {
   }
 }
 
+/**
+ * Get the list of supported branches.
+ * Returns an `Array<string>` of supported branches and writes into
+ * the `package.json` as a `supportedVersions` array.
+ * NOTE: Skips the current version.
+ */
 async function getSupportedBranches(current: string) {
   console.log(`Fetching latest ${NUM_SUPPORTED_VERSIONS} supported versions`)
   // TODO: all fine 🔥?
@@ -94,19 +106,21 @@ async function getSupportedBranches(current: string) {
     .map(b => b.name)
 
   const filtered: Record<string, string> = {}
-  branches.sort().forEach(branch => filtered[branch.charAt(0)]= branch)
-  const filteredBranches = Object.values(filtered).slice(-NUM_SUPPORTED_VERSIONS).filter(arr => arr !== currentVersion)
+  branches.sort().forEach(branch => filtered[branch.charAt(0)] = branch)
+  const filteredBranches = Object.values(filtered).slice(-NUM_SUPPORTED_VERSIONS).filter(arr => arr !== currentVersion && arr !== 'current')
 
-  // TODO: remove current branch
   writeToPackageJSON('supportedVersions', filteredBranches)
-  return Promise.resolve()
+  return Promise.resolve(console.log('  - Successfully written `supportedVersions` into package.json'))
 }
 
+/**
+ * Fetches current electron release and writes into the release let.
+ */
 async function fetchRelease () {
   console.log(`Determining 'latest' version dist-tag on npm`)
   const version = execSync('npm show electron version').toString().trim()
 
-  console.log(`   Fetching release data from GitHub`)
+  console.log(`  - Fetching release data from GitHub`)
 
   const repo = {
     owner: 'electron',
@@ -116,8 +130,15 @@ async function fetchRelease () {
 
   const res = await github.repos.getReleaseByTag(repo)
   release = res.data
+
+  return Promise.resolve(`  - Sucecssfully fetched release ${release.tag_name}`)
 }
 
+/**
+ * Fetches tutorials from the current branch.
+ * Suppored branches downloads in the `fetchAPIDocsFromSupportedVersions()`
+ * function.
+ */
 async function fetchAPIDocsFromLatestStableRelease () {
   console.log(`Fetching API docs from electron/electron#${release.tag_name}`)
 
@@ -128,13 +149,20 @@ async function fetchAPIDocsFromLatestStableRelease () {
     .filter((doc: IElectronDocsResponse) => doc.filename.startsWith('api/'))
     .forEach(writeDoc)
 
-  return Promise.resolve()
+  return Promise.resolve(console.log(` - Successfully fetched API docs from electron/electron#${release.tag_name}`))
 }
 
+/**
+ * Fetches tutorials from Electron supported branches.
+ * Current docs downloads in the `fetchAPIDocsFromLatestStableRelease()`
+ * function.
+ */
 async function fetchAPIDocsFromSupportedVersions () {
+  console.log('Fetching API docs from suppored branches')
+
   for (const version of packageJson.supportedVersions) {
     if (version.includes('5-0-x')) continue
-    console.log(`Fetching API docs from electron/electron#${version}`)
+    console.log(`  - from electron/electron#${version}`)
     const docs = await electronDocs(version)
 
     docs
@@ -147,6 +175,9 @@ async function fetchAPIDocsFromSupportedVersions () {
   return Promise.resolve()
 }
 
+/**
+ * Fetches `electron-api.json` without changes into the current docs directory.
+ */
 async function fetchApiData () {
   console.log(`Fetching API definitions from electron/electron#${release.tag_name}`)
 
@@ -160,11 +191,15 @@ async function fetchApiData () {
   const apis = response.body
   const filename = path.join(currentEnglishBasepath, 'electron-api.json')
   mkdir(path.dirname(filename))
-  console.log(`Writing ${path.relative(currentEnglishBasepath, filename)} (without changes)`)
+  console.log(`  - Writing ${path.relative(currentEnglishBasepath, filename)} (without changes)`)
   fs.writeFileSync(filename, JSON.stringify(apis, null, 2))
   return Promise.resolve(apis)
 }
 
+/**
+ * Gets the master branch commit and writes into `package.json` as
+ * an `electronMasterBranchCommit` property.
+ */
 async function getMasterBranchCommit () {
   console.log(`Fetching Electron master branch commit SHA`)
   const master = await github.repos.getBranch({
@@ -176,6 +211,11 @@ async function getMasterBranchCommit () {
   writeToPackageJSON('electronMasterBranchCommit', master.data.commit.sha)
 }
 
+/**
+ * Fetches tutorials from the master branch.
+ * Suppored branches downloads in the `fetchTutorialsFromSupportedBranch()`
+ * function.
+ */
 async function fetchTutorialsFromMasterBranch () {
   console.log(`Fetching tutorial docs from electron/electron#master`)
 
@@ -189,10 +229,17 @@ async function fetchTutorialsFromMasterBranch () {
   return Promise.resolve()
 }
 
+/**
+ * Fetches tutorials from Electron supported branches.
+ * Current docs downloads in the `fetchTutorialsFromMasterBranch()`
+ * function.
+ */
 async function fetchTutorialsFromSupportedBranch () {
+  console.log(`Fetching tutorial docs from supported branches`)
+
   for (const version of packageJson.supportedVersions) {
     if (version.includes('5-0-x')) continue
-    console.log(`Fetching tutorial docs from electron/electron#${version}`)
+    console.log(`  - from electron/electron#${version}`)
     const docs = await electronDocs(version)
 
     docs
@@ -206,6 +253,10 @@ async function fetchTutorialsFromSupportedBranch () {
   return Promise.resolve()
 }
 
+/**
+ * Fetches locale.yml from the website repo and saves into
+ * the `current` directory.
+ */
 async function fetchWebsiteContent () {
   console.log(`Fetching locale.yml from electron/electronjs.org#master`)
 
@@ -214,7 +265,7 @@ async function fetchWebsiteContent () {
   const content = response.body
   const websiteFile = path.join(currentEnglishBasepath, 'website', `locale.yml`)
   mkdir(path.dirname(websiteFile))
-  console.log(`Writing ${path.relative(currentEnglishBasepath, websiteFile)}`)
+  console.log(`  - Writing ${path.relative(currentEnglishBasepath, websiteFile)}`)
   fs.writeFileSync(websiteFile, content)
   return Promise.resolve()
 }
@@ -229,7 +280,7 @@ function writeDoc (doc: IElectronDocsResponse) {
 }
 
 function writeOtherDoc (doc: IElectronDocsResponse, version: string) {
-  const basepath = englishBasepath(version).toString()
+  const basepath = englishBasepath(version)
   const filename = path.join(basepath, 'docs', doc.filename)
   mkdir(path.dirname(filename))
   fs.writeFileSync(filename, doc.markdown_content)
