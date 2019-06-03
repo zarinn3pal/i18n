@@ -14,7 +14,7 @@ import * as Octokit from '@octokit/rest';
 const packageJson: Record<string, string> = require('../package.json')
 const electronDocs = require('electron-docs')
 const currentEnglishBasepath = path.join(__dirname, '..', 'content', 'current', 'en-US')
-const englishBasepath = path.join(__dirname, '..', 'content', 'notCurrent', 'en-US')
+const englishBasepath = (version: string) => path.join(__dirname, '..', 'content', version, 'en-US')
 
 const NUM_SUPPORTED_VERSIONS = 4
 
@@ -42,7 +42,8 @@ main().catch((err: Error) => {
 
 async function delContent () {
   await del(currentEnglishBasepath)
-  await del(englishBasepath)
+  // TODO.
+  await del(englishBasepath('4-1-0'))
 }
 
 async function main() {
@@ -82,7 +83,7 @@ async function fetchRelease () {
   console.log(`Determining 'latest' version dist-tag on npm`)
   const version = execSync('npm show electron version').toString().trim()
 
-  console.log(`Fetching release data from GitHub`)
+  console.log(`   Fetching release data from GitHub`)
 
   const repo = {
     owner: 'electron',
@@ -115,8 +116,12 @@ async function fetchAPIDocsFromSupportedVersions () {
 
     docs
       .filter((doc: IElectronDocsResponse) => doc.filename.startsWith('api/'))
-      .forEach(writeOtherDoc)
+      .forEach((doc: IElectronDocsResponse) => {
+        writeOtherDoc(doc, version)
+      })
   }
+
+  return Promise.resolve()
 }
 
 async function fetchApiData () {
@@ -170,7 +175,9 @@ async function fetchTutorialsFromSupportedBranch () {
     docs
       .filter((doc: IElectronDocsResponse) => !doc.filename.startsWith('api/'))
       .filter((doc: IElectronDocsResponse) => !doc.filename.includes('images/'))
-      .forEach(writeOtherDoc)
+      .forEach((doc: IElectronDocsResponse) => {
+        writeOtherDoc(doc, version)
+      })
   }
 
   return Promise.resolve()
@@ -198,11 +205,12 @@ function writeDoc (doc: IElectronDocsResponse) {
   // console.log('   ' + path.relative(englishBasepath, filename))
 }
 
-function writeOtherDoc (doc: IElectronDocsResponse) {
-  const filename = path.join(englishBasepath, 'docs', doc.filename)
+function writeOtherDoc (doc: IElectronDocsResponse, version: string) {
+  const basepath = englishBasepath(version).toString()
+  const filename = path.join(basepath, 'docs', doc.filename)
   mkdir(path.dirname(filename))
   fs.writeFileSync(filename, doc.markdown_content)
-  console.log('   ' + path.relative(englishBasepath, filename))
+  // console.log('   ' + path.relative(englishBasepath('4-2-x'), filename))
 }
 
 function writeToPackageJSON (key: string, value: string | Array<string>) {
