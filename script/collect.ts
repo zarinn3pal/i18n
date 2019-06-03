@@ -60,20 +60,23 @@ async function main() {
 }
 
 async function getSupportedBranches() {
-  console.log('Fetching latest 4 supported versions')
+  console.log(`Fetching latest ${NUM_SUPPORTED_VERSIONS} supported versions`)
 
   const resp = await github.repos.listBranches({
     owner: 'electron',
     repo: 'electron',
   })
 
-  const filteredBranches = resp.data
+  const branches = resp.data
     .filter(branch => {
       return branch.protected && branch.name.match(/[0-9]-[0-9]-x/)
     })
     .map(b => b.name)
-    .sort()
-    .slice(-NUM_SUPPORTED_VERSIONS)
+
+  const filtered: Record<string, string> = {}
+  branches.sort().forEach(branch => filtered[branch.charAt(0)]= branch)
+  const filteredBranches = Object.values(filtered).slice(-NUM_SUPPORTED_VERSIONS)
+
 
   writeToPackageJSON('supportedVersions', filteredBranches)
   return Promise.resolve()
