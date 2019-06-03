@@ -202,7 +202,7 @@ async function main () {
 
   const websiteStringsByLocale = Object.keys(locales)
     .reduce((acc, locale) => {
-      acc[locale] = require(`../content/${locale}/website/locale.yml`)
+      acc[locale] = require(`../content/current/${locale}/website/locale.yml`)
       return acc
     }, {})
 

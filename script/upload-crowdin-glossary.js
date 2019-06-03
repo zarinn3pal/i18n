@@ -5,7 +5,7 @@ require('dotenv-safe').load()
 const assert = require('assert')
 const globals = require('globals')
 
-const electronApis = require('../content/en-US/electron-api.json')
+const electronApis = require('../content/current/en-US/electron-api.json')
 const parseElectronGlossary = require('../lib/parse-electron-glossary')
 
 main()
