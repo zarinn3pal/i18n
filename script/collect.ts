@@ -11,7 +11,7 @@ import { sync as mkdir } from 'make-dir'
 import * as path from 'path'
 import { execSync } from 'child_process'
 import * as Octokit from '@octokit/rest';
-const packageJson: Record<string, string> = require('../package.json')
+const packageJson: Record<string, string[]> = require('../package.json')
 const electronDocs = require('electron-docs')
 const currentEnglishBasepath = path.join(__dirname, '..', 'content', 'current', 'en-US')
 const englishBasepath = (version: string) => path.join(__dirname, '..', 'content', version, 'en-US')
@@ -40,15 +40,20 @@ main().catch((err: Error) => {
   process.exit(1)
 })
 
-async function delContent () {
+async function delContent (branches: Array<string>) {
+  console.log('Deleting content')
+
+  console.log('  - Deleting current content')
   await del(currentEnglishBasepath)
-  // TODO.
-  await del(englishBasepath('4-1-0'))
+  for (const branch of branches) {
+    console.log(`  - Deleting content for ${branch}`)
+    await del(englishBasepath(branch))
+  }
 }
 
 async function main() {
-  await delContent()
   await getSupportedBranches()
+  await delContent(packageJson.supportedVersions)
   await fetchRelease()
   await fetchAPIDocsFromLatestStableRelease()
   await fetchAPIDocsFromSupportedVersions()
@@ -77,7 +82,7 @@ async function getSupportedBranches() {
   branches.sort().forEach(branch => filtered[branch.charAt(0)]= branch)
   const filteredBranches = Object.values(filtered).slice(-NUM_SUPPORTED_VERSIONS)
 
-
+  // TODO: remove current branch
   writeToPackageJSON('supportedVersions', filteredBranches)
   return Promise.resolve()
 }
