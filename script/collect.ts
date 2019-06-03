@@ -54,12 +54,12 @@ async function main() {
   await fetchWebsiteContent()
 }
 
-async function regerenerateCrowdinYAML (versions?: Array<string>) {
+async function regerenerateCrowdinYAML (versions: Array<string>) {
   const yamlPath = path.join(__dirname, '../crowdin.yml')
   const yamlOriginal = fs.readFileSync(yamlPath, 'utf8')
   const arr: Array<string> = []
 
-  versions!.forEach(version => {
+  versions.forEach(version => {
     const example = `
   # AUTOMATICALLY GENERATED CONTENT FOR ${version}
   - source: /content/${version}/en-US/docs/*.md
