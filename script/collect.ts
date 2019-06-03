@@ -40,6 +40,20 @@ main().catch((err: Error) => {
   process.exit(1)
 })
 
+async function main() {
+  await fetchRelease()
+  await getSupportedBranches(release.tag_name)
+  await delUnsupportedBranches(packageJson.supportedVersions)
+  await delContent(packageJson.supportedVersions)
+  await fetchAPIDocsFromLatestStableRelease()
+  await fetchAPIDocsFromSupportedVersions()
+  await fetchApiData()
+  await getMasterBranchCommit()
+  await fetchTutorialsFromMasterBranch()
+  await fetchTutorialsFromSupportedBranch()
+  await fetchWebsiteContent()
+}
+
 async function delUnsupportedBranches (versions: Array<string>) {
   const folders = fs.readdirSync('content')
   if (folders !== versions) {
@@ -61,20 +75,6 @@ async function delContent (branches: Array<string>) {
     console.log(`  - Deleting content for ${branch}`)
     await del(englishBasepath(branch))
   }
-}
-
-async function main() {
-  await fetchRelease()
-  await getSupportedBranches(release.tag_name)
-  await delUnsupportedBranches(packageJson.supportedVersions)
-  await delContent(packageJson.supportedVersions)
-  await fetchAPIDocsFromLatestStableRelease()
-  await fetchAPIDocsFromSupportedVersions()
-  await fetchApiData()
-  await getMasterBranchCommit()
-  await fetchTutorialsFromMasterBranch()
-  await fetchTutorialsFromSupportedBranch()
-  await fetchWebsiteContent()
 }
 
 async function getSupportedBranches(current: string) {
