@@ -180,7 +180,7 @@ async function fetchAPIDocsFromLatestStableRelease () {
 
   docs
     .filter((doc: IElectronDocsResponse) => doc.filename.startsWith('api/'))
-    .forEach(writeDoc)
+    .forEach((doc: IElectronDocsResponse) => writeDoc(doc))
 
   return Promise.resolve(console.log(` - Successfully fetched API docs from electron/electron#${release.tag_name}`))
 }
@@ -201,7 +201,7 @@ async function fetchAPIDocsFromSupportedVersions () {
     docs
       .filter((doc: IElectronDocsResponse) => doc.filename.startsWith('api/'))
       .forEach((doc: IElectronDocsResponse) => {
-        writeOtherDoc(doc, version)
+        writeDoc(doc, version)
       })
   }
 
@@ -257,7 +257,7 @@ async function fetchTutorialsFromMasterBranch () {
   docs
     .filter((doc: IElectronDocsResponse) => !doc.filename.startsWith('api/'))
     .filter((doc: IElectronDocsResponse) => !doc.filename.includes('images/'))
-    .forEach(writeDoc)
+    .forEach((doc: IElectronDocsResponse) => writeDoc(doc))
 
   return Promise.resolve()
 }
@@ -279,7 +279,7 @@ async function fetchTutorialsFromSupportedBranch () {
       .filter((doc: IElectronDocsResponse) => !doc.filename.startsWith('api/'))
       .filter((doc: IElectronDocsResponse) => !doc.filename.includes('images/'))
       .forEach((doc: IElectronDocsResponse) => {
-        writeOtherDoc(doc, version)
+        writeDoc(doc, version)
       })
   }
 
@@ -305,19 +305,13 @@ async function fetchWebsiteContent () {
 
 // Utility functions
 
-function writeDoc (doc: IElectronDocsResponse) {
-  const filename = path.join(currentEnglishBasepath, 'docs', doc.filename)
-  mkdir(path.dirname(filename))
-  fs.writeFileSync(filename, doc.markdown_content)
-  // console.log('   ' + path.relative(englishBasepath, filename))
-}
-
-function writeOtherDoc (doc: IElectronDocsResponse, version: string) {
-  const basepath = englishBasepath(version)
+function writeDoc (doc: IElectronDocsResponse, version?: string) {
+  let basepath = currentEnglishBasepath
+  if (version) basepath = englishBasepath(version)
   const filename = path.join(basepath, 'docs', doc.filename)
   mkdir(path.dirname(filename))
   fs.writeFileSync(filename, doc.markdown_content)
-  // console.log('   ' + path.relative(englishBasepath('4-2-x'), filename))
+  // console.log('   ' + path.relative(englishBasepath, filename))
 }
 
 function writeToPackageJSON (key: string, value: string | Array<string>) {
