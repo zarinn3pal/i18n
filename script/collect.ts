@@ -293,7 +293,7 @@ async function fetchTutorialsFromSupportedBranch () {
 async function fetchWebsiteContent () {
   console.log(`Fetching locale.yml from electron/electronjs.org#master`)
 
-  const url = 'https://rawgit.com/electron/electronjs.org/master/data/locale.yml'
+  const url = 'https://cdn.jsdelivr.net/gh/electron/electronjs.org@master/data/locale.yml'
   const response = await got(url)
   const content = response.body
   const websiteFile = path.join(currentEnglishBasepath, 'website', `locale.yml`)
