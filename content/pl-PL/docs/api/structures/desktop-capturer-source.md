@@ -1,0 +1,7 @@
+# Obiekt DesktopCapturerSource
+
+* `id` String - identyfikator okna lub ekranu, który może być używany jako ograniczenie `chromeMediaSourceId` podczas wywoływania [`navigator.webkitGetUserMedia`]. Formatem identyfikatora będzie `window:XX` lub `window:XX`, gdzie `XX` jest losowo wygenerowanym numerem.
+* `name` String - Gdy źródłem jest ekran, będzie się nazywać `Entire Screen` lub `Screen <index>`, podczas gdy nazwa źródła-okna będzie równa tytułowi okna.
+* `thumbnail` [NativeImage](../native-image.md) - obraz miniatury. **Uwaga:** Nie ma żadnej gwarancji, że rozmiar miniatury będzi taki sam jak wartość` thumbnailSize` określone w `options` przekazane do `desktopCapturer.getSources`. Rzeczywisty rozmiar zależy od skali ekranu lub okna.
+* `display_id` String - A unique identifier that will correspond to the `id` of the matching [Display](display.md) returned by the [Screen API](../screen.md). On some platforms, this is equivalent to the `XX` portion of the `id` field above and on others it will differ. It will be an empty string if not available.
+* `appIcon` [NativeImage](../native-image.md) - An icon image of the application that owns the window or null if the source has a type screen. The size of the icon is not known in advance and depends on what the the application provides.
