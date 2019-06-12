@@ -19,7 +19,7 @@ const englishBasepath = (version: string) => path.join(__dirname, '..', 'content
 const NUM_SUPPORTED_VERSIONS = 4
 
 const github = new Octokit({
-  auth: process.env.GH_TOKEN ? process.env.GH_TOKEN : ''
+  auth: process.env.GH_TOKEN ? process.env.GH_TOKEN : '',
 })
 
 interface IResponse {
@@ -151,14 +151,16 @@ async function getSupportedBranches(current: string) {
  */
 async function fetchRelease () {
   console.log(`Determining 'latest' version dist-tag on npm`)
-  const version = execSync('npm show electron version').toString().trim()
+  const version = execSync('npm show electron version')
+    .toString()
+    .trim()
 
   console.log(`  - Fetching release data from GitHub`)
 
   const repo = {
     owner: 'electron',
     repo: 'electron',
-    tag: `v${version}`
+    tag: `v${version}`,
   }
 
   const res = await github.repos.getReleaseByTag(repo)
@@ -217,7 +219,9 @@ async function fetchApiData () {
   const asset = release.assets.find(asset => asset.name === 'electron-api.json')
 
   if (!asset) {
-    return Promise.reject(Error(`No electron-api.json asset found for ${release.tag_name}`))
+    return Promise.reject(
+      Error(`No electron-api.json asset found for ${release.tag_name}`)
+    )
   }
 
   const response = await got(asset.browser_download_url, { json: true })
@@ -238,7 +242,7 @@ async function getMasterBranchCommit () {
   const master = await github.repos.getBranch({
     owner: 'electron',
     repo: 'electron',
-    branch: 'master'
+    branch: 'master',
   })
 
   writeToPackageJSON('electronMasterBranchCommit', master.data.commit.sha)

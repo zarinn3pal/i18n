@@ -1,9 +1,9 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-const fs = require('fs')
-const path = require('path')
-const { chain } = require('lodash')
-const walk = require('walk-sync')
+import * as fs from 'fs'
+import * as path from 'path'
+import { chain } from 'lodash'
+import * as walk from 'walk-sync'
 const matchWords = require('match-words')
 
 console.log(`# Word Count`)
@@ -11,20 +11,25 @@ console.log(`# Word Count`)
 analyze(path.join(__dirname, '../content/current/en-US'), 'English')
 analyze(path.join(__dirname, '../content/current'), 'All Languages')
 
-function analyze (dir, title) {
+function analyze(dir: string, title: string) {
   const files = walk(dir, { directories: false }).map(f => path.join(dir, f))
   const words = chain(files)
     .map(file => matchWords(fs.readFileSync(file, 'utf8')))
     .flatten()
     .value()
-  const counts = files.map(f => (matchWords(fs.readFileSync(f, 'utf8')) || []).length)
+  const counts = files.map(
+    f => (matchWords(fs.readFileSync(f, 'utf8')) || []).length
+  )
   const { average, sum } = require('simple-statistics')
 
-  const results = {
+  const results: Record<string, string | number> = {
     'total files': files.length,
     'total words': sum(counts),
-    'unique words': chain(words).flatten().uniq().value().length,
-    'average words per file': Math.floor(average(counts))
+    'unique words': chain(words)
+      .flatten()
+      .uniq()
+      .value().length,
+    'average words per file': Math.floor(average(counts)),
   }
 
   console.log(`\n## ${title}\n`)
