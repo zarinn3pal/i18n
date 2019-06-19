@@ -86,7 +86,7 @@ async function parseBlogFile(file) {
 
   // parse markdown to HTML
   const markdown = fs.readFileSync(file.fullPath, 'utf8')
-  const { content } = await eMarkdown(markdown)
+  const content = await eMarkdown(markdown)
   file.content = content
 
   // remove leftover file props from walk-sync
