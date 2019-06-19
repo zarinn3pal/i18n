@@ -17,6 +17,7 @@ const getIds = require('get-crowdin-file-ids')
 const remark = require('remark')
 const links = require('remark-inline-links')
 const parseElectronGlossary = require('../lib/parse-electron-glossary')
+const eMarkdown = require('electron-markdown')
 
 const contentDir = path.join(__dirname, '../content')
 const cheerio = require('cheerio')
@@ -85,7 +86,7 @@ async function parseBlogFile(file) {
 
   // parse markdown to HTML
   const markdown = fs.readFileSync(file.fullPath, 'utf8')
-  const { content } = await hubdown(markdown)
+  const { content } = await eMarkdown(markdown)
   file.content = content
 
   // remove leftover file props from walk-sync
