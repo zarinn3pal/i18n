@@ -96,6 +96,13 @@ describe('i18n.docs', () => {
   })
 })
 
+describe.only('i18n.docsByVersion', () => {
+  it('is an object with three version inside', () => {
+    const versions = Object.keys(i18n.docsByVersion)
+    expect(versions.length).to.equal(3)
+  })
+})
+
 describe('i18n.glossary', () => {
   it('is an object with locales as keys', () => {
     const locales = Object.keys(i18n.glossary)

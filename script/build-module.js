@@ -38,7 +38,7 @@ async function parseBetaVersion() {
   const betaVersion = packageJSON.supportedVersions[2]
   contentDir = path.join(__dirname, `../content/${betaVersion}`)
   ids = await getIds('electron')
-  
+
   console.time('parsed beta version docs in')
   const markdownFiles = walk
     .entries(contentDir)
@@ -58,7 +58,7 @@ async function parseBeforeStableVersion() {
   const beforeStableVersion = packageJSON.supportedVersions[1]
   contentDir = path.join(__dirname, `../content/${beforeStableVersion}`)
   ids = await getIds('electron')
-  
+
   console.time('parsed pre before stable docs in')
   const markdownFiles = walk
     .entries(contentDir)
@@ -78,7 +78,7 @@ async function parsePreEOLDocs() {
   const preEOLVer = packageJSON.supportedVersions[0]
   contentDir = path.join(__dirname, `../content/${preEOLVer}`)
   ids = await getIds('electron')
-  
+
   console.time('parsed pre EOL docs in')
   const markdownFiles = walk
     .entries(contentDir)
@@ -343,7 +343,7 @@ async function main() {
         docsByVersion: {
           betaVersion: betaVersionDocs,
           preEOLVersion: preEOLVersionDocs,
-          beforeStable: beforeStableVersionDocs
+          beforeStable: beforeStableVersionDocs,
         },
         website: websiteStringsByLocale,
         glossary: glossary,
