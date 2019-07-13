@@ -18,7 +18,7 @@ const remark = require('remark')
 const links = require('remark-inline-links')
 const parseElectronGlossary = require('../lib/parse-electron-glossary')
 
-const contentDir = path.join(__dirname, '../content/current')
+let contentDir = path.join(__dirname, '../content')
 const cheerio = require('cheerio')
 const categoryNames = {
   api: 'API',
@@ -34,7 +34,8 @@ function convertToUrlSlash(filePath) {
 
 let ids = {}
 
-async function parseDocs() {
+async function parseCurrentDocs() {
+  contentDir = path.join(__dirname, '../content')
   ids = await getIds('electron')
 
   console.time('parsed docs in')
@@ -205,7 +206,7 @@ function splitMd(md) {
 }
 
 async function main() {
-  const docs = await parseDocs()
+  const docs = await parseCurrentDocs()
   const docsByLocale = Object.keys(locales).reduce((acc, locale) => {
     acc[locale] = docs
       .filter(doc => doc.locale === locale)
