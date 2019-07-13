@@ -298,6 +298,7 @@ async function main() {
         ),
         electronLatestStableTag: packageJSON.electronLatestStableTag,
         electronMasterBranchCommit: packageJSON.electronMasterBranchCommit,
+        electronSupportedVersions: packageJSON.supportedVersions,
         locales: locales,
         docs: docsByLocale,
         docsByVersion: {
