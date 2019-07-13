@@ -18,7 +18,8 @@ const remark = require('remark')
 const links = require('remark-inline-links')
 const parseElectronGlossary = require('../lib/parse-electron-glossary')
 
-let contentDir = path.join(__dirname, '../content')
+/** @param {string} version */
+const contentDir = version => path.join(__dirname, `../content/${version}`)
 const cheerio = require('cheerio')
 const categoryNames = {
   api: 'API',
@@ -36,12 +37,11 @@ let ids = {}
 
 async function parseBetaVersion() {
   const betaVersion = packageJSON.supportedVersions[2]
-  contentDir = path.join(__dirname, `../content/${betaVersion}`)
   ids = await getIds('electron')
 
   console.time('parsed beta version docs in')
   const markdownFiles = walk
-    .entries(contentDir)
+    .entries(contentDir(betaVersion))
     .filter(file => file.relativePath.endsWith('.md'))
   console.log(
     `processing ${markdownFiles.length} files in ${
@@ -56,12 +56,11 @@ async function parseBetaVersion() {
 
 async function parseBeforeStableVersion() {
   const beforeStableVersion = packageJSON.supportedVersions[1]
-  contentDir = path.join(__dirname, `../content/${beforeStableVersion}`)
   ids = await getIds('electron')
 
   console.time('parsed pre before stable docs in')
   const markdownFiles = walk
-    .entries(contentDir)
+    .entries(contentDir(beforeStableVersion))
     .filter(file => file.relativePath.endsWith('.md'))
   console.log(
     `processing ${markdownFiles.length} files in ${
@@ -76,12 +75,11 @@ async function parseBeforeStableVersion() {
 
 async function parsePreEOLDocs() {
   const preEOLVer = packageJSON.supportedVersions[0]
-  contentDir = path.join(__dirname, `../content/${preEOLVer}`)
   ids = await getIds('electron')
 
   console.time('parsed pre EOL docs in')
   const markdownFiles = walk
-    .entries(contentDir)
+    .entries(contentDir(preEOLVer))
     .filter(file => file.relativePath.endsWith('.md'))
   console.log(
     `processing ${markdownFiles.length} files in ${
@@ -95,12 +93,11 @@ async function parsePreEOLDocs() {
 }
 
 async function parseCurrentDocs() {
-  contentDir = path.join(__dirname, '../content/current')
   ids = await getIds('electron')
 
   console.time('parsed docs in')
   const markdownFiles = walk
-    .entries(contentDir)
+    .entries(contentDir('current'))
     .filter(file => file.relativePath.endsWith('.md'))
   console.log(
     `processing ${markdownFiles.length} files in ${
@@ -292,7 +289,7 @@ async function main() {
     return acc
   }, {})
 
-  const preEOLDocs = await parseBetaVersion()
+  const preEOLDocs = await parsePreEOLDocs()
   const preEOLVersionDocs = Object.keys(locales).reduce((acc, locale) => {
     acc[locale] = preEOLDocs
       .filter(doc => doc.locale === locale)
@@ -305,7 +302,7 @@ async function main() {
     return acc
   }, {})
 
-  const beforeStableDocs = await parseBetaVersion()
+  const beforeStableDocs = await parseBeforeStableVersion()
   const beforeStableVersionDocs = Object.keys(locales).reduce((acc, locale) => {
     acc[locale] = beforeStableDocs
       .filter(doc => doc.locale === locale)

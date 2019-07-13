@@ -101,6 +101,12 @@ describe.only('i18n.docsByVersion', () => {
     const versions = Object.keys(i18n.docsByVersion)
     expect(versions.length).to.equal(3)
   })
+
+  it('is an object with docs objects as values', () => {
+    const docs = i18n.docsByVersion.betaVersion['en-US']
+    docs.should.be.an('object')
+    docs['/docs/api/accelerator'].should.be.an('object')
+  })
 })
 
 describe('i18n.glossary', () => {
