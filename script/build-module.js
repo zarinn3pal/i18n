@@ -35,13 +35,12 @@ function convertToUrlSlash(filePath) {
 
 let ids = {}
 
-async function parseBetaVersion() {
-  const betaVersion = packageJSON.supportedVersions[2]
+async function parseDocs(version) {
   ids = await getIds('electron')
 
-  console.time('parsed beta version docs in')
+  console.time('parsed docs in')
   const markdownFiles = walk
-    .entries(contentDir(betaVersion))
+    .entries(contentDir(version))
     .filter(file => file.relativePath.endsWith('.md'))
   console.log(
     `processing ${markdownFiles.length} files in ${
@@ -50,66 +49,30 @@ async function parseBetaVersion() {
   )
   let docs = await Promise.all(markdownFiles.map(parseFile))
 
-  console.timeEnd('parsed beta version docs in')
+  console.timeEnd('parsed docs in')
+  return docs
+}
+
+async function parseBetaVersion() {
+  const betaVersion = packageJSON.supportedVersions[2]
+  const docs = parseDocs(betaVersion)
   return docs
 }
 
 async function parseBeforeStableVersion() {
   const beforeStableVersion = packageJSON.supportedVersions[1]
-  ids = await getIds('electron')
-
-  console.time('parsed pre before stable docs in')
-  const markdownFiles = walk
-    .entries(contentDir(beforeStableVersion))
-    .filter(file => file.relativePath.endsWith('.md'))
-  console.log(
-    `processing ${markdownFiles.length} files in ${
-      Object.keys(locales).length
-    } locales`
-  )
-  let docs = await Promise.all(markdownFiles.map(parseFile))
-
-  console.timeEnd('parsed pre before stable docs in')
+  const docs = parseDocs(beforeStableVersion)
   return docs
 }
 
 async function parsePreEOLDocs() {
   const preEOLVer = packageJSON.supportedVersions[0]
-  ids = await getIds('electron')
-
-  console.time('parsed pre EOL docs in')
-  const markdownFiles = walk
-    .entries(contentDir(preEOLVer))
-    .filter(file => file.relativePath.endsWith('.md'))
-  console.log(
-    `processing ${markdownFiles.length} files in ${
-      Object.keys(locales).length
-    } locales`
-  )
-  let docs = await Promise.all(markdownFiles.map(parseFile))
-
-  console.timeEnd('parsed pre EOL docs in')
+  const docs = parseDocs(preEOLVer)
   return docs
 }
 
 async function parseCurrentDocs() {
-  ids = await getIds('electron')
-
-  console.time('parsed docs in')
-  const markdownFiles = walk
-    .entries(contentDir('current'))
-    .filter(file => file.relativePath.endsWith('.md'))
-  console.log(
-    `processing ${markdownFiles.length} files in ${
-      Object.keys(locales).length
-    } locales`
-  )
-  let docs = await Promise.all(markdownFiles.map(parseFile))
-
-  // ignore some docs
-  docs = docs.filter(doc => !doc.ignore)
-
-  console.timeEnd('parsed docs in')
+  const docs = parseDocs('current')
   return docs
 }
 
