@@ -34,8 +34,28 @@ function convertToUrlSlash(filePath) {
 
 let ids = {}
 
+async function parsePreEOLDocs() {
+  const preEOLVer = packageJSON.supportedVersions[0]
+  contentDir = path.join(__dirname, `../content/${preEOLVer}`)
+  ids = await getIds('electron')
+  
+  console.time('parsed pre EOL docs in')
+  const markdownFiles = walk
+    .entries(contentDir)
+    .filter(file => file.relativePath.endsWith('.md'))
+  console.log(
+    `processing ${markdownFiles.length} files in ${
+      Object.keys(locales).length
+    } locales`
+  )
+  let docs = await Promise.all(markdownFiles.map(parseFile))
+
+  console.timeEnd('parsed pre EOL docs in')
+  return docs
+}
+
 async function parseCurrentDocs() {
-  contentDir = path.join(__dirname, '../content')
+  contentDir = path.join(__dirname, '../content/current')
   ids = await getIds('electron')
 
   console.time('parsed docs in')
