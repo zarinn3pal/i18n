@@ -18,7 +18,7 @@ npm install electron -g
 
 ## 自定义
 
-如果需要安装某一位数的版本 (例如,在` x64`位的系统中安装` ia32`位版本), 则可以使用 npm中的 ` arch ` 命令，或可以通过设置 ` npm_config_arch ` 的环境变量来进行安装:
+如果想修改下载安装的位版本(例如, 在`x64`机器上安装`ia32`位版本), 你可以使用npm install中的`--arch`标记，或者设置`npm_config_arch` 环境变量:
 
 ```shell
 npm install --arch=ia32 electron
@@ -81,16 +81,16 @@ ELECTRON_MIRROR="https://npm.taobao.org/mirrors/electron/"
 ├── SHASUMS256.txt-1.8.2-beta.3
 ```
 
-## Skip binary download
+## 跳过二进制包下载
 
-When installing the `electron` NPM package, it automatically downloads the electron binary.
+当您在安装 `electron` NPM 包时, 它会自动下载 electron 的二进制包。
 
-This can sometimes be unnecessary, e.g. in a CI environment, when testing another component.
+当在CI环境中 测试另一个组件的时候，这可能是不必要的。
 
-To prevent the binary from being downloaded when you install all npm dependencies you can set the environment variable `ELECTRON_SKIP_BINARY_DOWNLOAD`. E.g.:
+为了防止当您安装所有 npm 依赖关系时下载二进制文件，您可以设置环境变量 `ELECTRON_SKIP_BINARY_DOWNODD`。 例如:
 
 ```sh
-ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm install
+ELECRON_SKIP_BINARY_DOWNOAD=1 npm install
 ```
 
 ## 故障排查

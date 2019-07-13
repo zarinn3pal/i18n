@@ -55,10 +55,9 @@ Hay preguntas que se hacen de manera frecuente. Revise esto antes de crear una c
   * [Pruebas de sistemas de CI sin cabeceras (Travis, Jenkins)](tutorial/testing-on-headless-ci.md)
   * [Extensión de herramientas de desarrollo](tutorial/devtools-extension.md)
   * [Automatizado con un controlador personalizado de prueba](tutorial/automated-testing-with-a-custom-driver.md)
-* Embalaje 
-  * [Firma de código](tutorial/code-signing.md)
 * [Distribución](tutorial/application-distribution.md) 
-  * [Soperte](tutorial/support.md)
+  * [Plataformas soportadas](tutorial/support.md#supported-platforms)
+  * [Firma de código](tutorial/code-signing.md)
   * [Mac App Store](tutorial/mac-app-store-submission-guide.md)
   * [Windows Store](tutorial/windows-store-guide.md)
   * [Snapcraft](tutorial/snapcraft.md)
@@ -71,7 +70,7 @@ Hay preguntas que se hacen de manera frecuente. Revise esto antes de crear una c
   * [Implementar un servidor de actualización](tutorial/updates.md#deploying-an-update-server)
   * [Implementación de actualizaciones en su aplicación](tutorial/updates.md#implementing-updates-in-your-app)
   * [Aplicar actualizaciones](tutorial/updates.md#applying-updates)
-* [Getting Support](tutorial/support.md)
+* [Obteniendo soporte](tutorial/support.md)
 
 ## Tutoriales detallados
 

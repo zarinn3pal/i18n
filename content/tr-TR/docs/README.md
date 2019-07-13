@@ -13,7 +13,7 @@ Sıklıkla sorulan sorular vardır. Bir sorun oluşturmadan önce bakınız:
 * [Electron Hakkında](tutorial/about.md)
 * [Geliştirme Ortamını Kurmak](tutorial/development-environment.md) 
   * [MacOS İçin Kurulum](tutorial/development-environment.md#setting-up-macos)
-  * [Linux İçin Kurulum](tutorial/development-environment.md#setting-up-windows)
+  * [Windows İçin Kurulum](tutorial/development-environment.md#setting-up-windows)
   * [Linux İçin Kurulum](tutorial/development-environment.md#setting-up-linux)
   * [Bir Editör Seçme](tutorial/development-environment.md#a-good-editor)
 * [İlk Uygulamanızı Oluşturma](tutorial/first-app.md) 
@@ -43,22 +43,21 @@ Sıklıkla sorulan sorular vardır. Bir sorun oluşturmadan önce bakınız:
   * [MacOS BrowserWindows için temsil edilen dosya](tutorial/represented-file.md)
   * [Yerel dosya sürükle & bırak](tutorial/native-file-drag-drop.md)
   * [Ekran Dışı İşleme](tutorial/offscreen-rendering.md)
-  * [Supporting macOS Dark Mode](tutorial/mojave-dark-mode-guide.md)
+  * [MacOS'da karanlık mod destekletmek](tutorial/mojave-dark-mode-guide.md)
 * [Erişilebilirlik](tutorial/accessibility.md) 
   * [Spectron](tutorial/accessibility.md#spectron)
   * [Devtron](tutorial/accessibility.md#devtron)
   * [Erişilebilirliği Etkinleştirmek](tutorial/accessibility.md#enabling-accessibility)
 * [Test ve Hata Ayıklama](tutorial/application-debugging.md) 
   * [Ana İşlem Hata Ayıklama](tutorial/debugging-main-process.md)
-  * [Debugging the Main Process with Visual Studio Code](tutorial/debugging-main-process-vscode.md)
+  * [Ana işlemi Visual Studio Code ile debuglamak](tutorial/debugging-main-process-vscode.md)
   * [Selenyum ve WebDriver Kullanma](tutorial/using-selenium-and-webdriver.md)
   * [Headless CI Sistemlerinde (Travis, Jenkins) Test Etme](tutorial/testing-on-headless-ci.md)
   * [DevTools Eklentisi](tutorial/devtools-extension.md)
   * [Özel Bir Sürücü ile Otomatik Test](tutorial/automated-testing-with-a-custom-driver.md)
-* Paketleme 
-  * [Kod İmzalama](tutorial/code-signing.md)
 * [Yayınlama](tutorial/application-distribution.md) 
-  * [Destek](tutorial/support.md)
+  * [Desteklenen Platformlar](tutorial/support.md#supported-platforms)
+  * [Kod İmzalama](tutorial/code-signing.md)
   * [Mac Uygulama Mağazası](tutorial/mac-app-store-submission-guide.md)
   * [Windows Mağaza](tutorial/windows-store-guide.md)
   * [Snapcraft](tutorial/snapcraft.md)
@@ -71,7 +70,7 @@ Sıklıkla sorulan sorular vardır. Bir sorun oluşturmadan önce bakınız:
   * [Güncelleme Sunucusunu Dağıtma](tutorial/updates.md#deploying-an-update-server)
   * [Uygulama içerisinde güncellemeleri yapmak](tutorial/updates.md#implementing-updates-in-your-app)
   * [Güncellemeleri Uygulama](tutorial/updates.md#applying-updates)
-* [Getting Support](tutorial/support.md)
+* [Destek al](tutorial/support.md)
 
 ## Detaylı Öğreticiler
 
@@ -81,11 +80,11 @@ Bu bireysel eğitimler, yukardaki kılavuz üzerinde tartışılan konularda gen
   * [Vekil Sunucular](tutorial/installation.md#proxies)
   * [Özel Aynalar ve Önbellekler](tutorial/installation.md#custom-mirrors-and-caches)
   * [Arıza giderme](tutorial/installation.md#troubleshooting)
-* Electron Releases & Developer Feedback 
-  * [Versioning Policy](tutorial/electron-versioning.md)
-  * [Release Timelines](tutorial/electron-timelines.md)
+* Electron Sürümleri & Geliştirici geri bildirimi 
+  * [Sürüm oluşturma ilkesi](tutorial/electron-versioning.md)
+  * [Sürüm zaman çizelgeleri](tutorial/electron-timelines.md)
   * [App Feedback Program](tutorial/app-feedback-program.md)
-* [Packaging App Source Code with asar](tutorial/application-packaging.md) 
+* [Asar ile kaynak kodu paketlemek](tutorial/application-packaging.md) 
   * [asar Arşivleri Üretmek](tutorial/application-packaging.md#generating-asar-archives)
   * [Arşivleri asar kullanma](tutorial/application-packaging.md#using-asar-archives)
   * [Kısıtlamalar](tutorial/application-packaging.md#limitations-of-the-node-api)
@@ -110,7 +109,7 @@ Bu bireysel eğitimler, yukardaki kılavuz üzerinde tartışılan konularda gen
 * [`File` Nesne](api/file-object.md)
 * [`<webview>`Etiket](api/webview-tag.md)
 * [`window.open` Fonksiyon](api/window-open.md)
-* [`BrowserWindowProxy` Object](api/browser-window-proxy.md)
+* [`BrowserWindowProxy` Nesne](api/browser-window-proxy.md)
 
 ### Ana Süreç İçin Modüller:
 

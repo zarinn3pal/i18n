@@ -5,15 +5,15 @@
 Stat | Value
 ---- | -----
 total files | 175
-total words | 176122
-unique words | 8891
-average words per file | 1006
+total words | 176823
+unique words | 8903
+average words per file | 1010
 
 ## All Languages
 
 Stat | Value
 ---- | -----
 total files | 4718
-total words | 3670421
-unique words | 82827
-average words per file | 777
+total words | 3680514
+unique words | 83648
+average words per file | 780

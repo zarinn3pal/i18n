@@ -1,4 +1,4 @@
-# Breaking Chnages
+# Важливі Зміни
 
 Зміни, які ламають роботу застосунку, будуть документуватися тут, також попередження про припинення підримки по можливості додано в JS код, як мінімум за [одне велике оновлення](../tutorial/electron-versioning.md#semver) до змін.
 
@@ -11,42 +11,42 @@
 ## `win.setMenu(null)`
 
 ```js
-// Deprecated
+// Не підтримується
 win.setMenu(null)
-// Replace with
+// Замініть на
 win.removeMenu()
 ```
 
-## `electron.screen` in renderer process
+## `electron.screen` в процесі рендеру
 
 ```js
-// Deprecated
+// Не підтримується
 require('electron').screen
-// Replace with
+// замініть на
 require('electron').remote.screen
 ```
 
-## `require` in sandboxed renderers
+## `require` в рендерензі пісочниці
 
 ```js
-// Deprecated
+// Не підтримується
 require('child_process')
-// Replace with
+// Замініть на
 require('electron').remote.require('child_process')
 
-// Deprecated
+// Не підтримується
 require('fs')
-// Replace with
+// Замініть на
 require('electron').remote.require('fs')
 
-// Deprecated
+// Не підтримується
 require('os')
-// Replace with
+// Замініть на
 require('electron').remote.require('os')
 
-// Deprecated
+// Не підтримується
 require('path')
-// Replace with
+// Замініть на
 require('electron').remote.require('path')
 ```
 
@@ -54,15 +54,25 @@ require('electron').remote.require('path')
 
 ## `new BrowserWindow({ webPreferences })`
 
-The following `webPreferences` option default values are deprecated in favor of the new defaults listed below.
+Припиняється підтримка наступних значень за замовчуванням опцій `webPreferences` на користь нових значень.
 
-| Property           | Deprecated Default                   | New Default |
-| ------------------ | ------------------------------------ | ----------- |
-| `contextIsolation` | `false`                              | `true`      |
-| `nodeIntegration`  | `true`                               | `false`     |
-| `webviewTag`       | `nodeIntegration` if set else `true` | `false`     |
+| Властивість        | Старе Значення                                    | Нове Значення |
+| ------------------ | ------------------------------------------------- | ------------- |
+| `contextIsolation` | `false`                                           | `true`        |
+| `nodeIntegration`  | `true`                                            | `false`       |
+| `webviewTag`       | `nodeIntegration` якщо встановлено, інакше `true` | `false`       |
 
-## `nativeWindowOpen`
+E.g. Re-enabling the webviewTag
+
+```js
+const w = new BrowserWindow({
+  webPreferences: {
+    webviewTag: true
+  }
+})
+```
+
+### `nativeWindowOpen`
 
 Child windows opened with the `nativeWindowOpen` option will always have Node.js integration disabled.
 
@@ -89,7 +99,7 @@ webFrame.setIsolatedWorldInfo(
 
 # Заплановані Зміни API (4.0)
 
-Даний список містить API зміни зроблені для Electron 4.0.
+The following list includes the breaking API changes made in Electron 4.0.
 
 ## `app.makeSingleInstance`
 
@@ -108,9 +118,9 @@ app.on('second-instance', (event, argv, cwd) => {
 ## `app.releaseSingleInstance`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 app.releaseSingleInstance()
-// Замінити на
+// Replace with
 app.releaseSingleInstanceLock()
 ```
 
@@ -128,7 +138,7 @@ When building native modules for windows, the `win_delay_load_hook` variable in 
 
 # Зміни API (3.0)
 
-Даний список містить API зміни для Electron 3.0.
+The following list includes the breaking API changes in Electron 3.0.
 
 ## `app`
 
@@ -170,37 +180,37 @@ window.on('app-command', (e, cmd) => {
 ## `clipboard`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 clipboard.readRtf()
-// Замінити на
+// Replace with
 clipboard.readRTF()
 
-// Припиняється підтримка
+// Deprecated
 clipboard.writeRtf()
-// Замінити на
+// Replace with
 clipboard.writeRTF()
 
-// Припиняється підтримка
+// Deprecated
 clipboard.readHtml()
-// Замінити на
+// Replace with
 clipboard.readHTML()
 
-// Припиняється підтримка
+// Deprecated
 clipboard.writeHtml()
-// Замінити на
+// Replace with
 clipboard.writeHTML()
 ```
 
 ## `crashReporter`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 crashReporter.start({
   companyName: 'Crashly',
   submitURL: 'https://crash.server.com',
   autoSubmit: true
 })
-// Замінити на
+// Replace with
 crashReporter.start({
   companyName: 'Crashly',
   submitURL: 'https://crash.server.com',
@@ -211,9 +221,9 @@ crashReporter.start({
 ## `nativeImage`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 nativeImage.createFromBuffer(buffer, 1.0)
-// Замінити
+// Replace with
 nativeImage.createFromBuffer(buffer, {
   scaleFactor: 1.0
 })
@@ -229,9 +239,9 @@ const info = process.getProcessMemoryInfo()
 ## `screen`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 screen.getMenuBarHeight()
-// Замінити на
+// Replace with
 screen.getPrimaryDisplay().workArea
 ```
 
@@ -251,79 +261,79 @@ ses.setCertificateVerifyProc((request, callback) => {
 ## `Tray`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 tray.setHighlightMode(true)
-// Замінити на
+// Replace with
 tray.setHighlightMode('on')
 
-// Припиняється підтримка
+// Deprecated
 tray.setHighlightMode(false)
-// Замінити на
+// Replace with
 tray.setHighlightMode('off')
 ```
 
 ## `webContents`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 webContents.openDevTools({ detach: true })
-// Замінити на
+// Replace with
 webContents.openDevTools({ mode: 'detach' })
 
-// Видалено
+// Removed
 webContents.setSize(options)
-// Для цього API заміни немає
+// There is no replacement for this API
 ```
 
 ## `webFrame`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 webFrame.registerURLSchemeAsSecure('app')
-// Замінити на
+// Replace with
 protocol.registerStandardSchemes(['app'], { secure: true })
 
-// Припиняється підтримка
+// Deprecated
 webFrame.registerURLSchemeAsPrivileged('app', { secure: true })
-// Замінити на
+// Replace with
 protocol.registerStandardSchemes(['app'], { secure: true })
 ```
 
 ## `<webview>`
 
 ```js
-// Видалено
+// Removed
 webview.setAttribute('disableguestresize', '')
-// Для цього API заміни немає
+// There is no replacement for this API
 
-// Видалено
+// Removed
 webview.setAttribute('guestinstance', instanceId)
-// TДля цього API заміни немає
+// There is no replacement for this API
 
-// Слухачі клавіатури більше не працюють з тегом webview
+// Keyboard listeners no longer work on webview tag
 webview.onkeydown = () => { /* handler */ }
 webview.onkeyup = () => { /* handler */ }
 ```
 
-## URL Node Заголовків
+## Node Headers URL
 
-Це URL визначені як `disturl` в `.npmrc` файлі чи прапорець `--dist-url` командного рядку, коли будуються нативні модулі Node.
+This is the URL specified as `disturl` in a `.npmrc` file or as the `--dist-url` command line flag when building native Node modules.
 
-Припиняється підтримка: https://atom.io/download/atom-shell
+Deprecated: https://atom.io/download/atom-shell
 
-Замінити на: https://atom.io/download/electron
+Replace with: https://atom.io/download/electron
 
 # Зміни API (2.0)
 
-Даний список містить API зміни зроблені для Electron 2.0.
+The following list includes the breaking API changes made in Electron 2.0.
 
 ## `BrowserWindow`
 
 ```js
-// Припиняється підтримка
+// Deprecated
 let optionsA = { titleBarStyle: 'hidden-inset' }
 let windowA = new BrowserWindow(optionsA)
-// Замінити на
+// Replace with
 let optionsB = { titleBarStyle: 'hiddenInset' }
 let windowB = new BrowserWindow(optionsB)
 ```
@@ -331,23 +341,23 @@ let windowB = new BrowserWindow(optionsB)
 ## `menu`
 
 ```js
-// Видалено
+// Removed
 menu.popup(browserWindow, 100, 200, 2)
-// Замінити на
+// Replaced with
 menu.popup(browserWindow, { x: 100, y: 200, positioningItem: 2 })
 ```
 
 ## `nativeImage`
 
 ```js
-// Видалено
+// Removed
 nativeImage.toPng()
-// Замінити на
+// Replaced with
 nativeImage.toPNG()
 
-// Видалено
+// Removed
 nativeImage.toJpeg()
-// Замінити на
+// Replaced with
 nativeImage.toJPEG()
 ```
 
@@ -358,34 +368,34 @@ nativeImage.toJPEG()
 ## `webContents`
 
 ```js
-// Видалено
+// Removed
 webContents.setZoomLevelLimits(1, 2)
-// Замінити на
+// Replaced with
 webContents.setVisualZoomLevelLimits(1, 2)
 ```
 
 ## `webFrame`
 
 ```js
-// Видалено
+// Removed
 webFrame.setZoomLevelLimits(1, 2)
-// Замінити на
+// Replaced with
 webFrame.setVisualZoomLevelLimits(1, 2)
 ```
 
 ## `<webview>`
 
 ```js
-// Видалено
+// Removed
 webview.setZoomLevelLimits(1, 2)
-// Замінити на
+// Replaced with
 webview.setVisualZoomLevelLimits(1, 2)
 ```
 
-## Дублікати ARM Файлів
+## Duplicate ARM Assets
 
-Кожен реліз Electron містить дві ідентичні ARM збірки з трохи різними назвами файлів, наприклад `electron-v1.7.3-linux-arm.zip` та `electron-v1.7.3-linux-armv7l.zip`. Файли з префіксом `v7l` були додані для ясності яку версію ARM вони підтримують, та відрізнити їх від майбутніх armv6l та arm64 файлів, які можуть з'явитися.
+Each Electron release includes two identical ARM builds with slightly different filenames, like `electron-v1.7.3-linux-arm.zip` and `electron-v1.7.3-linux-armv7l.zip`. The asset with the `v7l` prefix was added to clarify to users which ARM version it supports, and to disambiguate it from future armv6l and arm64 assets that may be produced.
 
-Файл *без префікса* все ще публікується, щоб уникнути поломки будь-яких налаштувань, які можуть використовувати їх. Починаючи з 2.0, файли без префікса перестануть публікуватися.
+The file *without the prefix* is still being published to avoid breaking any setups that may be consuming it. Starting at 2.0, the un-prefixed file will no longer be published.
 
-Детальніше дивіться [6986](https://github.com/electron/electron/pull/6986) та [7189](https://github.com/electron/electron/pull/7189).
+For details, see [6986](https://github.com/electron/electron/pull/6986) and [7189](https://github.com/electron/electron/pull/7189).
