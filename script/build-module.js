@@ -279,6 +279,45 @@ async function main() {
     return acc
   }, {})
 
+  const betaDocs = await parseBetaVersion()
+  const betaVersionDocs = Object.keys(locales).reduce((acc, locale) => {
+    acc[locale] = betaDocs
+      .filter(doc => doc.locale === locale)
+      .sort((a, b) => a.slug.localeCompare(b.slug))
+      .reduce((allDocs, doc) => {
+        allDocs[doc.href] = doc
+        return allDocs
+      }, {})
+
+    return acc
+  }, {})
+
+  const preEOLDocs = await parseBetaVersion()
+  const preEOLVersionDocs = Object.keys(locales).reduce((acc, locale) => {
+    acc[locale] = preEOLDocs
+      .filter(doc => doc.locale === locale)
+      .sort((a, b) => a.slug.localeCompare(b.slug))
+      .reduce((allDocs, doc) => {
+        allDocs[doc.href] = doc
+        return allDocs
+      }, {})
+
+    return acc
+  }, {})
+
+  const beforeStableDocs = await parseBetaVersion()
+  const beforeStableVersionDocs = Object.keys(locales).reduce((acc, locale) => {
+    acc[locale] = beforeStableDocs
+      .filter(doc => doc.locale === locale)
+      .sort((a, b) => a.slug.localeCompare(b.slug))
+      .reduce((allDocs, doc) => {
+        allDocs[doc.href] = doc
+        return allDocs
+      }, {})
+
+    return acc
+  }, {})
+
   const websiteStringsByLocale = Object.keys(locales).reduce((acc, locale) => {
     acc[locale] = require(`../content/current/${locale}/website/locale.yml`)
     return acc
@@ -301,6 +340,11 @@ async function main() {
         electronMasterBranchCommit: packageJSON.electronMasterBranchCommit,
         locales: locales,
         docs: docsByLocale,
+        docsByVersion: {
+          betaVersion: betaVersionDocs,
+          preEOLVersion: preEOLVersionDocs,
+          beforeStable: beforeStableVersionDocs
+        },
         website: websiteStringsByLocale,
         glossary: glossary,
         date: new Date(),
