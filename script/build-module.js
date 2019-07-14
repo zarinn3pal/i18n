@@ -91,7 +91,9 @@ async function parseFile(file) {
   // nice categories for use in nav
   file.categoryFancy = categoryNames[file.category]
 
-  file.href = `/docs/${file.category}/${file.slug}`.replace('//', '/')
+  file.version = file.basePath.split('/')[6]
+
+  file.href = `/docs${file.version !== 'current' ? `/${file.version}` : null}/${file.category}/${file.slug}`.replace('//', '/')
 
   // build a reference to the source
   file.githubUrl = `https://github.com/electron/electron/tree/master${file.href}.md`
