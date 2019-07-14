@@ -93,7 +93,9 @@ async function parseFile(file) {
 
   file.version = file.basePath.split('/')[6]
 
-  file.href = `/docs${file.version !== 'current' ? `/${file.version}` : null}/${file.category}/${file.slug}`.replace('//', '/')
+  file.href = `/docs${file.version !== 'current' ? `/${file.version}` : null}/${
+    file.category
+  }/${file.slug}`.replace('//', '/')
 
   // build a reference to the source
   file.githubUrl = `https://github.com/electron/electron/tree/master${file.href}.md`
