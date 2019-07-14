@@ -306,9 +306,9 @@ async function main() {
         locales: locales,
         docs: docsByLocale,
         docsByVersion: {
-          betaVersion: betaVersionDocs,
-          preEOLVersion: preEOLVersionDocs,
-          beforeStable: beforeStableVersionDocs,
+          [packageJSON.supportedVersions[2]]: betaVersionDocs,
+          [packageJSON.supportedVersions[0]]: preEOLVersionDocs,
+          [packageJSON.supportedVersions[1]]: beforeStableVersionDocs,
         },
         website: websiteStringsByLocale,
         glossary: glossary,
