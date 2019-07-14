@@ -93,7 +93,7 @@ async function parseFile(file) {
 
   file.version = file.basePath.split('/')[6]
 
-  file.href = `/docs${file.version !== 'current' ? `/${file.version}` : null}/${
+  file.href = `/docs${file.version !== 'current' ? `/${file.version}` : ''}/${
     file.category
   }/${file.slug}`.replace('//', '/')
 
