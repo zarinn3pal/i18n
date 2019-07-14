@@ -103,9 +103,11 @@ describe.only('i18n.docsByVersion', () => {
   })
 
   it('is an object with docs objects as values', () => {
-    const docs = i18n.docsByVersion.betaVersion['en-US']
-    docs.should.be.an('object')
-    docs['/docs/api/accelerator'].should.be.an('object')
+    for (const version of i18n.electronSupportedVersions) {
+      const docs = i18n.docsByVersion[version]['en-US']
+      expect(docs).should.be.an('object')
+      expect(docs[`/docs/${version}/api/accelerator`]).should.be.an('object')
+    }
   })
 })
 
@@ -410,6 +412,16 @@ describe('i18n.electronLatestStableTag', () => {
     i18n.electronLatestStableTag.should.eq(
       'v' + i18n.electronLatestStableVersion
     )
+  })
+})
+
+describe('i18n.electronSupportedVersions', () => {
+  it('its array', () => {
+    expect(i18n.electronSupportedVersions).to.be.a('array')
+  })
+
+  it('contains three last versions', () => {
+    expect(i18n.electronSupportedVersions.length).to.equal(3)
   })
 })
 
