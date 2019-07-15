@@ -91,7 +91,10 @@ async function parseFile(file) {
   // nice categories for use in nav
   file.categoryFancy = categoryNames[file.category]
 
-  file.version = file.basePath.split('/').slice(5).join('/')
+  file.version = file.basePath
+    .split('/')
+    .slice(5)
+    .join('/')
 
   file.href = `/docs${file.version !== 'current' ? `/${file.version}` : ''}/${
     file.category

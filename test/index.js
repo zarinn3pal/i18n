@@ -102,12 +102,50 @@ describe.only('i18n.docsByVersion', () => {
     expect(versions.length).to.equal(3)
   })
 
-  it('is an object with docs objects as values', () => {
-    for (const version of i18n.electronSupportedVersions) {
+  i18n.electronSupportedVersions.forEach(version => {
+    it(`is an object with docs object as value for (version ${version})`, () => {
       const docs = i18n.docsByVersion[version]['en-US']
       expect(docs).should.be.an('object')
       expect(docs[`/docs/${version}/api/accelerator`]).should.be.an('object')
-    }
+    })
+
+    it(`sets githubUrl on every doc (version ${version})`, () => {
+      const base = 'https://github.com/electron/electron/tree/master'
+      const docs = i18n.docsByVersion[version]['en-US']
+      docs[`/docs/${version}/api/accelerator`].githubUrl.should.equal(
+        `${base}/docs/${version}/api/accelerator.md`
+      )
+      docs[
+        `/docs/${version}/tutorial/electron-versioning`
+      ].githubUrl.should.equal(
+        `${base}/docs/${version}/tutorial/electron-versioning.md`
+      )
+    })
+
+    it(`does not contain <html>, <head>, or <body> tag in compiled html (version ${version})`, () => {
+      const html = i18n.docsByVersion[version]['en-US'][
+        `/docs/${version}/api/accelerator`
+      ].sections
+        .map(section => section.html)
+        .join('')
+      html.should.be.a('string')
+      html.should.contain('<p>')
+      html.should.not.contain('<html>')
+      html.should.not.contain('</html>')
+      html.should.not.contain('<head>')
+      html.should.not.contain('</head>')
+      html.should.not.contain('<body>')
+      html.should.not.contain('</body>')
+    })
+
+    it(`breaks up HTML into sections, for language-toggling on the website (version ${version})`, () => {
+      const { sections } = i18n.docsByVersion[version]['en-US'][
+        `/docs/${version}/api/accelerator`
+      ]
+      sections.should.be.an('array')
+      sections.length.should.be.above(0)
+      sections.every(section => section.name && section.html).should.eq(true)
+    })
   })
 })
 
