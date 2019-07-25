@@ -138,11 +138,11 @@ npm uninstall -g electron
 
 Jednak jeśli pomimo użycia wbudowanego modułu wciąż występuje ten błąd, bardzo prawdopodobnym jest to, że używasz modułu w niewłaściwym procesie. Na przykład `electron.app` może być używany tylko w głównym procesie, podczas gdy `electron.webFrame` dostępny jest tylko w procesach renderowania.
 
-## Czcionka wygląda na rozmazaną, co to jest i jak to naprawić?
+## The font looks blurry, what is this and what can I do?
 
 W przypadku gdy opcja [sub-pixel anti-aliasing](http://alienryderflex.com/sub_pixel/) jest wyłączona, czcionki na ekranach LCD mogą wyglądać na rozmazane. Na przykład:
 
-![subpixel rendering example](images/subpixel-rendering-screenshot.gif)
+![przykład renderowania subpikseli](images/subpixel-rendering-screenshot.gif)
 
 Sub-pixel anti-aliasing needs a non-transparent background of the layer containing the font glyphs. (Zobacz [ problem ](https://github.com/electron/electron/issues/6344#issuecomment-420371918) by dowiedzieć się więcej).
 
@@ -155,6 +155,6 @@ let win = new BrowserWindow({
 })
 ```
 
-Efekt jest widoczny tylko na (niektórych?) ekranach LCD. Nawet jeśli Ty nie widzisz różnicy, niektórzy z użytkowników Twojej aplikacji mogą ją dostrzec. Najlepiej zawsze ustawić tło w ten sposób, chyba że masz powody, aby tego nie robić.
+Efekt jest widoczny tylko na (niektórych?) ekranach LCD. Nawet jeśli Ty nie widzisz różnicy, niektórzy z użytkowników Twojej aplikacji mogą ją dostrzec. Najlepiej zawsze ustawiać tło w taki sposób, chyba że masz powody, aby tego nie robić.
 
 Zauważ, że sama zmiana tła w CSS nie przyniesie oczekiwanego efektu.

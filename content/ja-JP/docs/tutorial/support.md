@@ -8,7 +8,7 @@
 
 * Atomフォーラム上の[`electron`](https://discuss.atom.io/c/electron)カテゴリ
 * Freenode上の`#atom-shell`チャネル
-* `#electron` channel on [Atom's Slack](https://discuss.atom.io/t/join-us-on-slack/16638?source_topic_id=25406)
+* [Atom の Slack](https://discuss.atom.io/t/join-us-on-slack/16638?source_topic_id=25406) の `#electron` チャンネル
 * [`electron-ru`](https://telegram.me/electron_ru) *(ロシア)*
 * [`electron-br`](https://electron-br.slack.com) *(ブラジルポルトガル語)*
 * [`electron-kr`](https://electron-kr.github.io/electron-kr) *(韓国語)*
@@ -25,7 +25,11 @@ Electronにコントリビュートしたい場合は、[コントリビュー�
 
 ## サポートされているバージョン
 
-最新の 3 つの主要バージョンは Electron チームによってサポートされています。 たとえば、最新リリースが 5.0.x の場合、4.x.y シリーズがサポートされます。以前の2つのリリースシリーズ 3.x.y と 2.x.y も同様です。
+最新の 3 つのメジャーバージョンは Electron チームによってサポートされます。 たとえば、最新リリースが 5.0.x の場合、4.x.y シリーズと、それ以前の2つのリリースシリーズ 3.x.y と 2.x.y もサポートされます。
+
+最新の安定版リリースは一方的に `master` からすべての修正を受け取り、それ以前のバージョンは時間と容量が許すようなこれら修正の大部分を受けています。 サポートされている最も古いリリースラインには、セキュリティ修正のみが直接送られます。
+
+サポートされているすべてのリリースラインは、以前 `master` にマージされた修正をバックポートする外部のプルリクエストを受け付けます。これは、一部の古いサポートラインではケースバイケースとなります。 すべてのリリースラインのバックポートに関する紛糾は、バックポートプルリクエストが発行された週に、週1回の会議での議題項目として [リリースワーキンググループ](https://github.com/electron/governance/tree/master/wg-releases) によって解決されます。
 
 ### 現在のサポート対象バージョン
 

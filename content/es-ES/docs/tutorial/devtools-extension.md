@@ -21,7 +21,7 @@ Usando [React Developer Tools](https://chrome.google.com/webstore/detail/react-d
         * `~/.config/chromium/Default/Extensions/`
     * en macOS es `~/Library/Application Support/Google/Chrome/Default/Extensions`.
 
-4. Pass the location of the extension to `BrowserWindow.addDevToolsExtension` API, for the React Developer Tools, it is something like:
+4. Pasar la ubicación de la extensión a la API `BrowserWindow.addDevToolsExtension`, para React Developer Tools, esto es algo así:
     
     ```javascript
     const path = require('path')
@@ -34,7 +34,11 @@ Usando [React Developer Tools](https://chrome.google.com/webstore/detail/react-d
 
 **Nota:** La API `BrowserWindow.addDevToolsExtension` no puede ser llamada antes de que el módulo app emita el evento ready.
 
-El nombre de la extensión es devuelta por `BrowserWindow.addDevToolsExtension`, y puedes trasladar el nombre de la extensión a la API `BrowserWindow.removeDevToolsExtension` para removerla.
+La extensión será recordada, por lo tanto sólo necesitará llamar a la API una única vez. Si intentas agregar una extensión que ya ha sido cargada, este metodo no retornara nada y en su lugar aparecerá una advertencia en la consola.
+
+### Cómo eliminar una extensión DevTools
+
+Puede pasar el nombre de la extensión a la API `BrowserWindow.removeDevToolsExtension` para eliminarla. El nombre de la extensión es retornada por `BrowserWindow.addDevToolsExtension` y puedes obtener el nombre de todas las extensiones instaladas usando la API `BrowserWindow.getDeveToolsExtensions`.
 
 ## Extensiones DevTools soportadas
 

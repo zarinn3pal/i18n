@@ -34,7 +34,11 @@ Electron支持[Chrome DevTools 扩展程序](https://developer.chrome.com/extens
 
 **注意：**只有在app模块的ready事件触发之后，才可以调用`BrowserWindow.addDevToolsExtension` API
 
-`BrowserWindow.addDevToolsExtension`将会返回扩展的名字，你可以把这个名字传入`BrowserWindow.removeDevToolsExtension`API来卸载它。
+The extension will be remembered so you only need to call this API once per extension. If you try to add an extension that has already been loaded, this method will not return and instead log a warning to the console.
+
+### 如何移除一个 DevTools 扩展程序
+
+您可以传递扩展程序的名称到 `BrowserWindow.remoeDeveToolsExtension` API 移除它。 The name of the extension is returned by `BrowserWindow.addDevToolsExtension` and you can get the names of all installed DevTools Extensions using the `BrowserWindow.getDevToolsExtensions` API.
 
 ## 支持的 DevTools 扩展程序
 

@@ -1,4 +1,4 @@
-# Electron's Dokumentations-Styleguide
+# Electron Documentation Style Guide
 
 Dies sind die Richtlinien für das Schreiben von Dokumentation zu Elektron.
 
@@ -110,7 +110,7 @@ Using the `Session` and `Cookies` classes as an example:
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

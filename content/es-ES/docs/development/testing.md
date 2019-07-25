@@ -20,3 +20,11 @@ Para ejecutar todas las pruebas de unidad, ejecute `npm run test`. Las pruebas d
 
 To run only specific tests matching a pattern, run `npm run test --
 -g=PATTERN`, replacing the `PATTERN` with a regex that matches the tests you would like to run. As an example: If you want to run only IPC tests, you would run `npm run test -- -g ipc`.
+
+### Probando en dispositivos Windows 10
+
+[Algunos dispositivos Windows 10](https://docs.microsoft.com/en-us/typography/fonts/windows_10_font_list) no se incluye la fuente Meiryo instalada, lo que puede causar que falle una prueba. Para instalar Meiryo:
+
+1. Presione la tecla Windows y busca *Administrar herramientas opcionales*.
+2. Haga clic en *Añadir una herramienta*.
+3. Seleccione *Fuentes suplementarias japonesas* y haga clic en *Instalar*.

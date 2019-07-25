@@ -1,4 +1,4 @@
-# Electron 문서 스타일 안내
+# Electron Documentation Style Guide
 
 Electron 문서 작성 가이드입니다.
 
@@ -111,7 +111,7 @@ API 참고문서에는, 이 규칙에 대한 예외가 있습니다.
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

@@ -1,4 +1,4 @@
-# Breaking Chnages
+# 重大更改
 
 这里将记录重大更改,并在可能的情况下向JS代码添加弃用警告,在这更改之前至少会有[一个重要版本](../tutorial/electron-versioning.md#semver).
 
@@ -11,42 +11,42 @@
 ## `win.setMenu(null)`
 
 ```js
-// Deprecated
+// 不推荐
 win.setMenu(null)
-// Replace with
+// 替换为
 win.removeMenu()
 ```
 
-## `electron.screen` in renderer process
+## 渲染进程中的 `electron.screen`
 
 ```js
-// Deprecated
+// 不推荐
 require('electron').screen
-// Replace with
+// 替换为
 require('electron').remote.screen
 ```
 
-## `require` in sandboxed renderers
+## 沙盒渲染器中的`require`
 
 ```js
-// Deprecated
+// 不推荐
 require('child_process')
-// Replace with
+// 替换为
 require('electron').remote.require('child_process')
 
-// Deprecated
+// 不推荐
 require('fs')
-// Replace with
+// 替换为
 require('electron').remote.require('fs')
 
-// Deprecated
+// 不推荐
 require('os')
-// Replace with
+// 替换为
 require('electron').remote.require('os')
 
-// Deprecated
+// 不推荐
 require('path')
-// Replace with
+// 替换为
 require('electron').remote.require('path')
 ```
 
@@ -62,22 +62,32 @@ require('electron').remote.require('path')
 | `nodeIntegration`  | `true`                          | `false` |
 | `webviewTag`       | `nodeIntegration` 未设置过则是 `true` | `false` |
 
-## `nativeWindowOpen`
+例如，重新启用 webviewTag
+
+```js
+const w = new BrowserWindow({
+  webPreferences: {
+    webviewTag: true
+  }
+})
+```
+
+### `nativeWindowOpen`
 
 使用 `nativeWindowOpen` 选项打开的子窗口将始终禁用 Node.js 集成。
 
-## Privileged Schemes Registration
+## 带权限的 Scheme 注册
 
-Renderer process APIs `webFrame.setRegisterURLSchemeAsPrivileged` and `webFrame.registerURLSchemeAsBypassingCSP` as well as browser process API `protocol.registerStandardSchemes` have been removed. A new API, `protocol.registerSchemesAsPrivileged` has been added and should be used for registering custom schemes with the required privileges. Custom schemes are required to be registered before app ready.
+移除 Renderer process APIs `webFrame.setLSSemeAsPrivieged` 和 `webFrame.registerURLLSQUIseAswersegCSP` 以及浏览器 process API `protocol.registerStardsSchemes`. 新的 API `protocol.registerSchemeasviliged` 已被添加，并用于注册具有必要权限的自定义 scheme。 自定义 scheme 需要在 app 触发 ready 事件之前注册。
 
 ## webFrame Isolated World APIs
 
 ```js
-// Deprecated
+// 弃用
 webFrame.setIsolatedWorldContentSecurityPolicy(worldId, csp)
 webFrame.setIsolatedWorldHumanReadableName(worldId, name)
 webFrame.setIsolatedWorldSecurityOrigin(worldId, securityOrigin)
-// Replace with
+// 替换为
 webFrame.setIsolatedWorldInfo(
   worldId,
   {
@@ -94,11 +104,11 @@ webFrame.setIsolatedWorldInfo(
 ## `app.makeSingleInstance`
 
 ```js
-// Deprecated
+// 弃用
 app.makeSingleInstance((argv, cwd) => {
   /* ... */
 })
-// Replace with
+// 替换为
 app.requestSingleInstanceLock()
 app.on('second-instance', (event, argv, cwd) => {
   /* ... */
@@ -146,20 +156,20 @@ const { memory } = metrics[0] // 弃用的属性
 ## `BrowserWindow`
 
 ```js
-// Deprecated
+// 弃用
 let optionsA = { webPreferences: { blinkFeatures: '' } }
 let windowA = new BrowserWindow(optionsA)
-// Replace with
+// 替换为
 let optionsB = { webPreferences: { enableBlinkFeatures: '' } }
 let windowB = new BrowserWindow(optionsB)
 
-// Deprecated
+// 弃用
 window.on('app-command', (e, cmd) => {
   if (cmd === 'media-play_pause') {
     // do something
   }
 })
-// Replace with
+// 替换为
 window.on('app-command', (e, cmd) => {
   if (cmd === 'media-play-pause') {
     // do something
@@ -194,7 +204,7 @@ clipboard.writeHTML()
 ## `crashReporter`
 
 ```js
-// 过时的
+// 弃用
 crashReporter.start({
   companyName: 'Crashly',
   submitURL: 'https://crash.server.com',
@@ -222,7 +232,7 @@ nativeImage.createFromBuffer(buffer, {
 ## `process`
 
 ```js
-// Deprecated
+// 弃用
 const info = process.getProcessMemoryInfo()
 ```
 
@@ -238,11 +248,11 @@ screen.getPrimaryDisplay().workArea
 ## `session`
 
 ```js
-// Deprecated
+// 弃用
 ses.setCertificateVerifyProc((hostname, certificate, callback) => {
   callback(true)
 })
-// Replace with
+// 替换为
 ses.setCertificateVerifyProc((request, callback) => {
   callback(0)
 })
@@ -251,12 +261,12 @@ ses.setCertificateVerifyProc((request, callback) => {
 ## `Tray`
 
 ```js
-// 过时的
+// 弃用
 tray.setHighlightMode(true)
 // 替换为
 tray.setHighlightMode('on')
 
-// 过时的
+// 弃用
 tray.setHighlightMode(false)
 // 替换为
 tray.setHighlightMode('off')
@@ -309,7 +319,7 @@ webview.onkeyup = () => { /* handler */ }
 
 这是在构建原生 node 模块时在 `.npmrc` 文件中指定为 `disturl` 的 url 或是 `--dist-url` 命令行标志.
 
-过时的: https://atom.io/download/atom-shell
+弃用: https://atom.io/download/atom-shell
 
 替换为: https://atom.io/download/electron
 
@@ -320,10 +330,10 @@ webview.onkeyup = () => { /* handler */ }
 ## `BrowserWindow`
 
 ```js
-// 过时的
+// 弃用
 let optionsA = { titleBarStyle: 'hidden-inset' }
 let windowA = new BrowserWindow(optionsA)
-//替换为
+// 替换为
 let optionsB = { titleBarStyle: 'hiddenInset' }
 let windowB = new BrowserWindow(optionsB)
 ```

@@ -14,7 +14,7 @@
 시스템과 Python 버전이 TLS 1.2를 지원하는지 확인하십시오. 이것은 macOS와 Python 버전에 따라 다릅니다. 빠른 테스트를 위해 다음을 실행하십시오.
 
 ```sh
-$ npm run check-tls
+$ npx @electron/check-python-tls
 ```
 
 If the script returns that your configuration is using an outdated security protocol, you can either update macOS to High Sierra or install a new version of Python 2.7.x. To upgrade Python, use [Homebrew](https://brew.sh/):
@@ -37,7 +37,7 @@ $ pip install pyobjc
 
 If you're developing Electron and don't plan to redistribute your custom Electron build, you may skip this section.
 
-Official Electron builds are built with [Xcode 9.4.1](http://adcdownload.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip), and the MacOS 10.13 SDK. Building with a newer SDK works too, but the releases currently use the 10.13 SDK.
+공식 Electron은 [Xcode 9.4.1](http://adcdownload.apple.com/Developer_Tools/Xcode_9.4.1/Xcode_9.4.1.xip) 및 MacOS 10.13 SDK로 빌드됩니다. Building with a newer SDK works too, but the releases currently use the 10.13 SDK.
 
 ## Building Electron
 

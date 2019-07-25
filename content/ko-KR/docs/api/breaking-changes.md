@@ -1,6 +1,6 @@
-# Breaking Chnages
+# 중대한 변화
 
-Breaking changes will be documented here, and deprecation warnings added to JS code where possible, at least [one major version](../tutorial/electron-versioning.md#semver) before the change is made.
+주요 변경사항은 여기에 기록됩니다. and deprecation warnings added to JS code where possible, at least [one major version](../tutorial/electron-versioning.md#semver) before the change is made.
 
 # `FIXME` 주석
 
@@ -62,7 +62,17 @@ require('electron').remote.require('path')
 | `nodeIntegration`  | `true`                               | `false` |
 | `webviewTag`       | `nodeIntegration` if set else `true` | `false` |
 
-## `nativeWindowOpen`
+E.g. Re-enabling the webviewTag
+
+```js
+const w = new BrowserWindow({
+  webPreferences: {
+    webviewTag: true
+  }
+})
+```
+
+### `nativeWindowOpen`
 
 Child windows opened with the `nativeWindowOpen` option will always have Node.js integration disabled.
 

@@ -1,4 +1,4 @@
-# Breaking Chnages
+# Breaking Changes
 
 Les changements cassants seront documentés ici, et des avertissements de dépréciations ajoutés au code JS quand possible, au moins [une version majeur](../tutorial/electron-versioning.md#semver) avant que le changement soit fait.
 
@@ -62,7 +62,17 @@ Les options suivantes de `webPreferences` seront dépréciées en faveur de nouv
 | `nodeIntegration`  | `true`                                | `false`                    |
 | `webviewTag`       | `nodeIntegration` si mis sinon `true` | `false`                    |
 
-## `nativeWindowOpen`
+E.g. Re-enabling the webviewTag
+
+```js
+const w = new BrowserWindow({
+  webPreferences: {
+    webviewTag: true
+  }
+})
+```
+
+### `nativeWindowOpen`
 
 La fenêtre enfant ouverte avec l'option `nativeWindowOpen` aura toujours l'intégration de Node.js désactivée.
 

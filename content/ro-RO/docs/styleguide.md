@@ -1,4 +1,4 @@
-# Documentația ghidului de stil Electron
+# Electron Documentation Style Guide
 
 Acestea sunt liniile directoare pentru scrierea documentației Electron.
 
@@ -110,7 +110,7 @@ Using the `Session` and `Cookies` classes as an example:
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

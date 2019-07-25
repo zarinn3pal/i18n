@@ -1,4 +1,4 @@
-# Electron ドキュメントガイド
+# Electron ドキュメントスタイルガイド
 
 Electronのドキュメント（英語）を書くためのガイドラインです。
 
@@ -110,7 +110,7 @@ Electronのドキュメント（英語）を書くためのガイドラインで
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

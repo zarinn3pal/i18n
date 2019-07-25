@@ -44,7 +44,6 @@
     "semantic-release": "^15.5.0",
     "simple-statistics": "^7.0.2",
     "prettier": "^1.18.2",
-    "travis-deploy-once": "^5.0.0",
     "ts-node": "^8.1.0",
     "typescript": "^3.5.1",
     "walk-sync": "^1.1.3"
@@ -65,13 +64,12 @@
     "prepack": "check-for-leaks",
     "prepush": "check-for-leaks",
     "pretest": "npm run build",
-    "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release",
     "upload-crowdin-glossary": "node script/upload-crowdin-glossary.js",
     "automerge": "ts-node ./script/automerge.ts"
   },
-  "electronLatestStableTag": "v5.0.3",
-  "electronMasterBranchCommit": "292a240e1b166dea3f4bff6c523fde86430b77e7",
+  "electronLatestStableTag": "v5.0.8",
+  "electronMasterBranchCommit": "6b7c66aa04a78578dc053e3486687c82947d1b1f",
   "supportedVersions": [
     "3-1-x",
     "4-2-x",

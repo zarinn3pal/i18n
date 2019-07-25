@@ -24,7 +24,7 @@ npm install -g electron-windows-store
 
 ## ステップ1: Electronアプリケーションのパッケージ化
 
-[electron-packager](https://github.com/electron-userland/electron-packager)(または似たようなツール) を使ってパッケージ化します。 アプリケーションサイズが大きくなるので、実際には必要ないモジュールを`node_modules`から確実に削除します。
+[electron-packager](https://github.com/electron/electron-packager) (または類似ツール) を用いてパッケージします。 アプリケーションサイズが大きくなるので、実際には必要ないモジュールを`node_modules`から確実に削除します。
 
 出力はおおよそ以下のようになります:
 
@@ -60,7 +60,6 @@ npm install -g electron-windows-store
 electron-windows-store `
     --input-directory C:\myelectronapp `
     --output-directory C:\output\myelectronapp `
-    --flatten true `
     --package-version 1.0.0.0 `
     --package-name myelectronapp
 ```

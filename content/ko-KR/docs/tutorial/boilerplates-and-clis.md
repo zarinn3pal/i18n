@@ -1,10 +1,10 @@
 # Boilerplates와 CLI
 
-Electron 개발은 유연합니다 - Electron 응용 프로그램을 개발, 빌드, 패키징 또는 배포하는 "유일한 방법"이 존재하지 않습니다. 빌드 및 런타임 모두에 대한 Electron의 추가 기능은 일반적으로 개별 패키지의 [ npm ](https://www.npmjs.com/search?q=electron)에서 찾을 수 있고, 개발자가 앱을 빌드하고 필요한 파이프 라인을 빌드 할 수 있습니다.
+Electron development is unopinionated - there is no "one true way" to develop, build, package, or release an Electron application. 빌드 및 런타임 모두에 대한 Electron의 추가 기능은 일반적으로 개별 패키지의 [ npm ](https://www.npmjs.com/search?q=electron)에서 찾을 수 있고, 개발자가 앱을 빌드하고 필요한 파이프 라인을 빌드 할 수 있습니다.
 
 이런 확장성과 모듈화 수준은 Electron으로 작업 하는 모든 개발자들이, 속한 팀이 크든 작든, 개발 라이프 사이클 중 언제든지 수행 할 수 있는 것과 수행 할 수 없는 것에 제한을 받지 않게 합니다. 그러나 대부분의 개발자들은 community-driven 한 상용구 또는 명령 줄 도구 중 하나를 사용함으로써 응용 프로그램을 컴파일, 패키지화 및 릴리스하는 일을 쉽게 할 수 있습니다.
 
-## 상용구 코드 vs CLI
+## Boilerplate vs CLI
 
 상용구는 응용 프로그램을 만드는데 시작 지점입니다 - 말하자면 캔버스입니다. 상용구는 당신이 복제한 다음 마음대로 수정할 수 있는 저장소의 형태로 제공되는 것이 일반적입니다.
 
@@ -14,7 +14,7 @@ Electron 개발은 유연합니다 - Electron 응용 프로그램을 개발, 빌
 
 "모던 Electron 응용 프로그램을 구축하기위한 완벽한 도구". Electron Forge는 Electron 개발을 위한 기존의 (잘 관리 된) 빌드 툴을 일관된 패키지로 통합하여 누구나 바로 Electron 개발에 뛰어들 수 있습니다.
 
-Forge에는 React, Vue 또는 Angular와 같은 보편적 인 프레임 워크 용 [ready-to-use templates](https://electronforge.io/templates)이 있습니다. ([`electron-packager`](https://github.com/electron-userland/electron-packager)와 같은) 더 큰 Electron 커뮤니티에서 사용되는 것과 동일한 핵심 모듈을 사용합니다. - (Slack과 같은) Electron maintainers가 변경 한 사항은 Forge의 사용자에게도 도움이됩니다.
+Forge에는 React, Vue 또는 Angular와 같은 보편적 인 프레임 워크 용 [ready-to-use templates](https://electronforge.io/templates)이 있습니다. ([`electron-packager`](https://github.com/electron/electron-packager)와 같은) 더 큰 Electron 커뮤니티에서 사용되는 것과 동일한 핵심 모듈을 사용합니다. - (Slack과 같은) Electron maintainers가 변경 한 사항은 Forge의 사용자에게도 도움이됩니다.
 
 [Electronforge.io](https://electronforge.io/)에 더 많은 정보 및 문서를 찾을 수 있습니다.
 

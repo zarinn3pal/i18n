@@ -1,4 +1,4 @@
-# Руководство по написанию документации Electron
+# Руководство по стилю документации Electron
 
 Это руководство для написания Electron документации.
 
@@ -110,7 +110,7 @@
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

@@ -1,4 +1,4 @@
-# סגנון כתיבת התיעוד של Electron
+# Electron Documentation Style Guide
 
 אלו הקווים המנחים לכתיבת תיעוד ל־Electron.
 
@@ -110,7 +110,7 @@ Using the `Session` and `Cookies` classes as an example:
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

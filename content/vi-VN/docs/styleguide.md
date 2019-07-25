@@ -1,4 +1,4 @@
-# Tài liệu về Styleguide của Electron
+# Electron Documentation Style Guide
 
 Đây là những nguyên tắc để viết tài liệu Electron.
 
@@ -110,7 +110,7 @@ Sử dụng tài liệu của các class `Session` và `Cookies` làm ví dụ:
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

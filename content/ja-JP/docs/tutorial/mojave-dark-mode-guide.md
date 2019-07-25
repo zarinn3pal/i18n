@@ -1,27 +1,12 @@
 # Mojave Dark Mode
 
-macOS 10.14 Mojave にて、Apple は新しい [システム全体のダークモード](https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/dark-mode/) を全ての macOS コンピュータに導入しました。 デフォルトの Electron アプリケーションは、それが有効になっているときでも UI とネイティブインターフェイスを自動的にダークモード設定に調整しません。 これは主に、あなた自身のアプリがダークモードをサポートしていない場合には、ダークモードネイティブインターフェースを使用**すべきではない**という Apple 自身のガイドラインによるものです。
+macOS 10.14 Mojave にて、Apple は新しい [システム全体のダークモード](https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/dark-mode/) を全ての macOS コンピュータに導入しました。 アプリにダークモードが設定されている場合は、Electron アプリにシステム側のダークモード設定を適用させることができます。
 
-アプリにダークモードが設定されている場合は、Electron アプリにシステム全体のダークモード設定を適用させることができます。
+macOS 10.15 Catalina にて、Apple は新しい "自動" ダークモードオプションを全ての macOS コンピュータに導入しました。 Catalina 上のこのモードで `isDarkMode` および `Tray` API を正しく機能させるには、`Info.plist` ファイルで `NSRequiresAquaSystemAppearance` を `false` に設定するか、Electron を `>=7.0.0` にする必要があります。
 
 ## ネイティブインターフェースを自動的に更新する
 
-"ネイティブインターフェース" にはファイルピッカー、ウインドウの縁、ダイアログ、右クリックメニュー、などの、あなたのアプリではない macOS 由来の基本的な UI が含まれます。 これらのインターフェースを自動的にダークモードに更新するには、アプリの `Info.plist` ファイルの `NSRequiresAquaSystemAppearance` キーを `false` に設定する必要があります。 例
-
-```xml
-<plist>
-<dict>
-  ...
-  <key>NSRequiresAquaSystemAppearance</key>
-  <false />
-  ...
-</dict>
-</plist>
-```
-
-[`electron-packager` >= 12.2.0](https://github.com/electron-userland/electron-packager) か [`electron-forge` >= 6](https://github.com/electron-userland/electron-forge) を使用している場合、[`darwinDarkModeSupport`](https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#darwindarkmodesupport) オプションを設定してパッケージするときにセットされるようにできます。
-
-[`electron-builder` >= 20.37.0](https://github.com/electron-userland/electron-builder) を使用している場合、[`darkModeSupport`](https://www.electron.build/configuration/mac.html) オプションを設定できます。
+"ネイティブインターフェース" にはファイルピッカー、ウインドウの縁、ダイアログ、右クリックメニューなどの、あなたのアプリではない macOS 由来の基本的な UI が含まれます。 取り消したい場合は、`Info.plist` ファイルの `NSRequiresAquaSystemAppearance` キーを `true` にセットする必要があります。 一度 Electron が 10.14 SDK に対してビルドを開始すると、このテーマを取り消せなくなることに注意してください。
 
 ## 自作のインターフェースを自動的に更新する
 

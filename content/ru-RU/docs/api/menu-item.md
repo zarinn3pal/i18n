@@ -13,7 +13,7 @@ Process: [Main](../glossary.md#main-process)
     * `menuItem` MenuItem
     * `browserWindow` [BrowserWindow](browser-window.md)
     * `event` Event
-  * `role` String (optional) - Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteandmatchstyle`, `delete`, `selectall`, `reload`, `forcereload`, `toggledevtools`, `resetzoom`, `zoomin`, `zoomout`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideothers`, `unhide`, `quit`, `startspeaking`, `stopspeaking`, `close`, `minimize`, `zoom` or `front` - Define the action of the menu item, when specified the `click` property will be ignored. See [roles](#roles).
+  * `role` Строка(опционально) - Может принимать значения `undo`, `redo`, `cut`, `copy`, `paste`, `pasteandmatchstyle`, `delete`, `selectall`, `reload`, `forcereload`, `toggledevtools`, `resetzoom`, `zoomin`, `zoomout`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideothers`, `unhide`, `quit`, `startspeaking`, `stopspeaking`, `close`, `minimize`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu` или `windowMenu` - Определите действие пункта меню, когда указанное свойство `click` будет проигнорировано. See [roles](#roles).
   * `type` String (optional) - Can be `normal`, `separator`, `submenu`, `checkbox` or `radio`.
   * `label` String (optional)
   * `sublabel` String (optional)
@@ -95,28 +95,72 @@ When specifying a `role` on macOS, `label` and `accelerator` are the only option
 
 The following properties are available on instances of `MenuItem`:
 
-#### `menuItem.enabled`
+#### `menuItem.id`
 
-A `Boolean` indicating whether the item is enabled, this property can be dynamically changed.
-
-#### `menuItem.visible`
-
-A `Boolean` indicating whether the item is visible, this property can be dynamically changed.
-
-#### `menuItem.checked`
-
-A `Boolean` indicating whether the item is checked, this property can be dynamically changed.
-
-A `checkbox` menu item will toggle the `checked` property on and off when selected.
-
-A `radio` menu item will turn on its `checked` property when clicked, and will turn off that property for all adjacent items in the same menu.
-
-You can add a `click` function for additional behavior.
+`Строка` с указанием уникального id элемента, это свойство может быть динамически изменено.
 
 #### `menuItem.label`
 
-A `String` representing the menu items visible label.
+`Строка` указывает видимую метку элемента, это свойство может быть динамически изменено.
 
 #### `menuItem.click`
 
-A `Function` that is fired when the MenuItem receives a click event.
+`Функция` которая выполняется, когда MenuItem получает событие щелчка. Она может быть вызвана с `menuItem.click(event, focusedWindow, focusedWebContents)`.
+
+* `event` Event
+* `focusedWindow` [BrowserWindow](browser-window.md)
+* `focusedWebContents` [WebContents](web-contents.md)
+
+#### `menuItem.submenu`
+
+A `Menu` (optional) containing the menu item's submenu, if present.
+
+#### `menuItem.type`
+
+`Строка` с указанием типа элемента.
+
+#### `menuItem.role`
+
+`String` (опционально) с указанием роли элемента, если установлено. Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteandmatchstyle`, `delete`, `selectall`, `reload`, `forcereload`, `toggledevtools`, `resetzoom`, `zoomin`, `zoomout`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideothers`, `unhide`, `quit`, `startspeaking`, `stopspeaking`, `close`, `minimize`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu` or `windowMenu`
+
+#### `menuItem.accelerator`
+
+`Строка` (опционально) с указанием ускорителя элемента, если установлено.
+
+#### `menuItem.icon`
+
+`NativeImage | Строка` (опционально) с указанием иконки элемента, если установлено.
+
+#### `menuItem.sublabel`
+
+`Строка` с указанием подписи элемента, это свойство может быть динамически изменено.
+
+#### `menuItem.enabled`
+
+`Boolean` указывает, включен ли элемент, это свойство может быть динамически изменено.
+
+#### `menuItem.visible`
+
+`Boolean` указывает, видим ли элемент, это свойство может быть динамически изменено.
+
+#### `menuItem.checked`
+
+`Boolean` указывает, помечен ли элемент флажком, это свойство может быть динамически изменено.
+
+`Сheckbox` пункт меню переключит `checked` при выборе.
+
+`Radio` пункт меню включит его свойство `checked` при нажатии, и отключит это свойство для всех смежных пунктов в том же меню.
+
+Вы можете добавить функцию `щелчка` для дополнительного поведения.
+
+#### `menuItem.registerAccelerator`
+
+`Boolean` указывает, следует ли регистрировать ускоритель с системой или только что отобразить, это свойство может быть динамически изменено.
+
+#### `menuItem.commandId`
+
+`Номер` с указанием уникального последовательного идентификатора элемента.
+
+#### `menuItem.menu`
+
+`Меню`, частью которого является элемент.

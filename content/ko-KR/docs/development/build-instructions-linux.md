@@ -10,7 +10,7 @@
     Please also ensure that your system and Python version support at least TLS 1.2. For a quick test, run the following script:
     
     ```sh
-    $ npm run check-tls
+    $ npx @electron/check-python-tls
     ```
     
     If the script returns that your configuration is using an outdated security protocol, use your system's package manager to update Python to the latest version in the 2.7.x branch. 또는 https://www.python.org/downloads/ 에 방문하여 자세한 방법을 확인하십시오.
@@ -92,7 +92,7 @@ $ sudo ln -s /usr/lib/libncurses.so.5 /usr/lib/libtinfo.so.5
 
 ### 다운로드된 `clang` 바이너리 대신 시스템의 `clang` 사용하기
 
-By default Electron is built with prebuilt [`clang`](https://clang.llvm.org/get_started.html) binaries provided by the Chromium project. If for some reason you want to build with the `clang` installed in your system, you can specify the `clang_base_path` argument in the GN args.
+기본적으로 Electron은 Chromium 프로젝트에서 제공하는 미리 빌드된 [`clang`](https://clang.llvm.org/get_started.html) 바이너리를 통해 빌드됩니다. 몇 가지 이유로 시스템에 설치된 `clang`으로 빌드하고 싶으시다면, GN 인수에서 `clang_base_path` 인수를 명시할 수 있습니다.
 
 For example if you installed `clang` under `/usr/local/bin/clang`:
 

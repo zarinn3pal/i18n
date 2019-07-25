@@ -24,7 +24,7 @@ npm install -g electron-windows-store
 
 ## Étape 1 : Empaqueter votre Application Electron
 
-Empaquetez l’application à l’aide de [electron-packager](https://github.com/electron-userland/electron-packager) (ou un outil similaire). Assurez vous de supprimer `node_modules` que vous n'avez pas besoin dans votre application finale, puisque n'importe quel module dont vous n'avez pas besoin augmentera inutilement la taille de votre application.
+Empaquetez l’application à l’aide de [electron-packager](https://github.com/electron/electron-packager) (ou un outil similaire). Assurez vous de supprimer `node_modules` que vous n'avez pas besoin dans votre application finale, puisque n'importe quel module dont vous n'avez pas besoin augmentera inutilement la taille de votre application.
 
 La sortie devrait ressembler à peu près à ceci :
 
@@ -58,11 +58,10 @@ Depuis un PowerShell élevé (exécuter le "en tant Administrateur"), exécutez 
 
 ```powershell
 electron-windows-store `
-   --input-directory C:\myelectronapp `
-   --output-directory C:\output\myelectronapp `
-   --flatten true `
-   --package-version 1.0.0.0 `
-   --package-name myelectronapp
+    --input-directory C:\myelectronapp `
+    --output-directory C:\output\myelectronapp `
+    --package-version 1.0.0.0 `
+    --package-name myelectronapp
 ```
 
 Une fois exécuté, l’outil se met au travail : il accepte votre app Electron comme entrée, et aplatit les `node_modules`. Ensuite, il archive votre application comme `app.zip`. En utilisant un installateur et un conteneur de Windows, l’outil crée un paquet AppX « élargi » - contenant le manifeste d’Application Windows (`AppXManifest.xml`) ainsi que le système de fichiers virtuel et le registre virtuel à l’intérieur de votre dossier de sortie.

@@ -1,4 +1,4 @@
-# Electron Belgeleme Stil Rehberi
+# Electron Dokümantasyon Stil Rehberi
 
 Electron belgeleri yazmak için rehberler.
 
@@ -110,7 +110,7 @@ Sınıfı olmayan modüller için onların yöntemleri ve olayları `##Methods` 
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

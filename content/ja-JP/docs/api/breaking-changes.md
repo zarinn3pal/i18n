@@ -62,7 +62,17 @@ require('electron').remote.require('path')
 | `nodeIntegration`  | `true`                            | `false` |
 | `webviewTag`       | `nodeIntegration` を設定しなければ `true` | `false` |
 
-## `nativeWindowOpen`
+webviewTag を再び有効にする例
+
+```js
+const w = new BrowserWindow({
+  webPreferences: {
+    webviewTag: true
+  }
+})
+```
+
+### `nativeWindowOpen`
 
 `nativeWindowOpen` オプションで開かれる子ウインドウは Node.js integration が無効化されます。
 

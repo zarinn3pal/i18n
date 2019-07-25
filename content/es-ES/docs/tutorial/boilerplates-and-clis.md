@@ -4,7 +4,7 @@ El desarrollo con Electron es libre de opiniones, y no hay una "única manera" d
 
 Ese nivel de modularidad y extensibilidad asegura que todos los desarrolladores que trabajan con Electron, ambos equipos grandes y pequeños, nunca estén restringidos en que pueden o no puedan hacer en cualquier momento durante sus ciclos de vida del desarrollo. Sin embargo, para muchos desarrolladores, uno de los boilerplates comunitarios o herramientas de línea de comandos podría facilitar dramáticamente el compilar, empacar y liberar una aplicación.
 
-## Plantilla vs CLI
+## Plantillas vs CLI
 
 Un boilerplate es sólo un punto de partida -un lienzo en blanco, por así decirlo- a partir del cual construir su aplicación. Generalmente vienen en la forma de un repositorio, que se puede clonar y personalizar a gusto.
 
@@ -14,7 +14,7 @@ Por otro, lado una herramienta de línea de comandos sigue para apoyarle a lo la
 
 Una "herramienta completa para las construcción de aplicaciones Electron modernas". Electron Forge unifica las herramientas de construcción existentes (y bien mantenidas) para el desarrollo de Electron en un paquete cohesivo de manera que cualquiera pueda saltar directamente al desarrollo en Electron.
 
-Forge viene con [Plantillas listas para usar](https://electronforge.io/templates) para infraestructuras populares como React, Vue o Angular. Utiliza los mismos módulos de núcleo usados por la gran comunidad Electron (como [`electron-packager`](https://github.com/electron-userland/electron-packager)) - los cambios hechos por los mantenedores a cargo de Electron (como Slack), benefician también a los usuarios de Forge.
+Forge viene con [Plantillas listas para usar](https://electronforge.io/templates) para infraestructuras populares como React, Vue o Angular. Utiliza los mismos módulos de núcleo usados por la gran mayoría en la comunidad Electron (como [`electron-packager`](https://github.com/electron/electron-packager)) - los cambios hechos por los mantenedores a cargo de Electron (como Slack), benefician también a los usuarios de Forge.
 
 Puede encontrar información y documentación en [electronforge.io](https://electronforge.io/).
 

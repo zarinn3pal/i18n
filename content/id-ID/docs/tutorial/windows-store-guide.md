@@ -24,7 +24,7 @@ npm install -g electron-windows-store
 
 ## Langkah 1: Kemas Aplikasi Elektron Anda
 
-Kemas aplikasi dengan menggunakan [electron-packager](https://github.com/electron-userland/electron-packager) (or a similar tool). Make sure to remove `node_modules` that you don't need in your final application, since any module you don't actually need will increase your application's size.
+Kemas aplikasi dengan menggunakan [electron-packager](https://github.com/electron/electron-packager) (or a similar tool). Make sure to remove `node_modules` that you don't need in your final application, since any module you don't actually need will increase your application's size.
 
 Outputnya harus terlihat kira-kira seperti ini:
 
@@ -57,7 +57,11 @@ Outputnya harus terlihat kira-kira seperti ini:
 Dari PowerShell yang ditinggikan (jalankan sebagai "Administrator"), jalankan `electron-windows-store ` dengan parameter yang dibutuhkan, berikan kedua input tersebut dan direktori output, nama dan versi aplikasi, dan konfirmasi itu `node_modules ` harus diratakan.
 
 ```powershell
-direktori-direktori-direktori-masukkan-direktori-C: \myelectronapp `--output-directory C:\output \ myelectronapp` --flatten true `--package-version 1.0.0.0` --package-name myelectronapp
+electron-windows-store `
+    --input-directory C:\myelectronapp `
+    --output-directory C:\output\myelectronapp `
+    --package-version 1.0.0.0 `
+    --package-name myelectronapp
 ```
 
 Setelah dijalankan, alat bekerja: Ini menerima aplikasi Elektron Anda sebagai masukan, meratakan `node_modules`. Kemudian, arsipkan aplikasi Anda sebagai `app.zip`. Dengan menggunakan installer dan Windows Container, alat ini menciptakan AppX yang "diperluas" paket - termasuk Windows Application Manifest (` AppXManifest.xml `) sebagai serta sistem file virtual dan virtual registry di dalam output Anda map.

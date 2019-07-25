@@ -43,9 +43,9 @@ Electron이 초기화를 끝냈을 때 발생하는 이벤트입니다. macOS에
 
 * `event` Event
 
-Emitted before the application starts closing its windows. Calling `event.preventDefault()` will prevent the default behavior, which is terminating the application.
+어플리케이션이 윈도우를 닫기 시작하기 전에 발생 합니다. `Event.preventDefault()`를 호출하면 기본 동작인 어플리케이션 종료를 하지 않습니다.
 
-**Note:** If application quit was initiated by `autoUpdater.quitAndInstall()`, then `before-quit` is emitted *after* emitting `close` event on all windows and closing them.
+**참고:** 만약 어플리케이션이 `autoUpdater.quitAndInstall()`에 의해 종료되는 경우 모든 윈도우에서 `close`이벤트를 발생한 *후* `before-quit` 가 발생되고 윈도우를 닫습니다.
 
 **참고**: Window 운영체제에서는 시스템 종료, 재시작 또는 로그아웃으로 앱이 종료되는 경우 해당 이벤트가 발생하지 않습니다.
 
@@ -154,7 +154,7 @@ Returns:
 * `type` String - 활동을 식별하는 문자열. [`NSUserActivity.activityType`](https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSUserActivity_Class/index.html#//apple_ref/occ/instp/NSUserActivity/activityType)와 맵핑됩니다.
 * `userInfo` 객체 - 액티비티가 저장한 app-specific 상태를 가지고 있습니다.
 
-[Handoff](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/Handoff/HandoffFundamentals/HandoffFundamentals.html)가 다른 기기에서 재시작될 때 발생합니다. 송신된 정보를 업데이트할 필요가 있다면, 즉시 `event.preventDefault()`를 호출해주십시오. 그리고, 새 `userInfo` 딕셔너리를 구성하여, `app.updateCurrentActivity()`를 시의적절하게 호출해주십시오. Otherwise, the operation will fail and `continue-activity-error` will be called.
+[Handoff](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/Handoff/HandoffFundamentals/HandoffFundamentals.html)가 다른 기기에서 재시작될 때 발생합니다. 송신된 정보를 업데이트할 필요가 있다면, 즉시 `event.preventDefault()`를 호출해주십시오. 그리고, 새 `userInfo` 딕셔너리를 구성하여, `app.updateCurrentActivity()`를 시의적절하게 호출해주십시오. 그렇지 않으면 명령이 실패하여, `continue-activity-error` 가 호출됩니다.
 
 ### 이벤트: 'new-window-for-tab' *macOS*
 
@@ -272,9 +272,9 @@ Returns:
   * `username` String
   * `password` String
 
-Emitted when `webContents` wants to do basic auth.
+`webContents`가 기본 인증을 필요로 할 때 발생된다.
 
-The default behavior is to cancel all authentications. To override this you should prevent the default behavior with `event.preventDefault()` and call `callback(username, password)` with the credentials.
+기본 동작은 모든 인증을 취소하는 것이다. 이것을 override 하기 위해서는 `event.preventDefault()`을 이용해 기본 동작이 일어나지 않도록 해야하고 자격정보와 함께`callback(username, password)`을 호출하면 된다.
 
 ```javascript
 const { app } = require('electron')
@@ -292,7 +292,7 @@ app.on('login', (event, webContents, request, authInfo, callback) => {
 * `event` Event
 * `killed` Boolean
 
-Emitted when the gpu process crashes or is killed.
+Gpu 프로세스가 죽었을 때 발생한다.
 
 ### 이벤트: 'accessibility-support-changed' *macOS* *Windows*
 
@@ -301,9 +301,9 @@ Returns:
 * `event` Event
 * `accessibilitySupportEnabled` Boolean - Chrome의 접근성 지원이 활성화 됐을 땐 `true`, `false`는 그 이외.
 
-Emitted when Chrome's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
+Chrome의 accessibility 가 변경되면 발생합니다. 이 이벤트는 스크린리더와 같은 보조기술이 활성화 혹은 비활성화될 때 발생합니다. https://www.chromium.org/developers/design-documents/accessibility 에서 더 자세한 내용을 확인하세요.
 
-### Event: 'session-created'
+### 이벤트: 'session-created'
 
 반환:
 
@@ -490,53 +490,53 @@ Returns `String` - A path to a special directory or file associated with `name`.
 * `documents` User의 "My Documents" 폴더 경로.
 * `downloads` User의 downloads 폴더 경로.
 * `music` User의 music 폴더 경로.
-* `pictures` Directory for a user's pictures.
-* `videos` Directory for a user's videos.
-* `logs` Directory for your app's log folder.
-* `pepperFlashSystemPlugin` Full path to the system version of the Pepper Flash plugin.
+* `pictures` 사용자의 pictures 폴더 경로.
+* `videos` 사용자의 videos 폴더 경로.
+* `logs` 사용자의 log 폴더 경로.
+* `pepperFlashSystemPlugin` Pepper Flash 플러그인의 시스템 버전에 대한 전체 경로.
 
 ### `app.getFileIcon(path[, options], callback)`
 
 * `path` String
 * `options` Object (선택) 
-  * `size` String 
+  * `크기` String 
     * `small` - 16x16
     * `normal` - 32x32
-    * `large` - 48x48 on *Linux*, 32x32 on *Windows*, unsupported on *macOS*.
+    * `large` - *Linux*에서 48x48, *Windows*에서 32x32, *macOS* 미지원.
 * `callback` 함수 
   * `error` Error
   * `icon` [NativeImage](native-image.md)
 
 Fetches a path's associated icon.
 
-On *Windows*, there a 2 kinds of icons:
+*Windows*에는 2종류의 아이콘이 있습니다:
 
-* Icons associated with certain file extensions, like `.mp3`, `.png`, etc.
-* Icons inside the file itself, like `.exe`, `.dll`, `.ico`.
+* `.mp3`, `.png`등과 같이 특정 파일 확장명과 관련된 아이콘
+* `.exe`, `.dll`, `.ico`와 같이 파일 안에 있는 아이콘.
 
-On *Linux* and *macOS*, icons depend on the application associated with file mime type.
+*Linux*와 *macOS*에서 아이콘은 mime type과 관련된 어플리케이션에 따라 다릅니다.
 
-**[Deprecated Soon](promisification.md)**
+**[곧 중단 예정](promisification.md)**
 
 ### `app.getFileIcon(path[, options])`
 
 * `path` String
 * `options` Object (선택) 
-  * `size` String 
+  * `크기` String 
     * `small` - 16x16
     * `normal` - 32x32
-    * `large` - 48x48 on *Linux*, 32x32 on *Windows*, unsupported on *macOS*.
+    * `large` - *Linux*에서 48x48, *Windows*에서 32x32, *macOS* 미지원.
 
 Returns `Promise<NativeImage>` - fulfilled with the app's icon, which is a [NativeImage](native-image.md).
 
 Fetches a path's associated icon.
 
-On *Windows*, there a 2 kinds of icons:
+*Windows*에는 2종류의 아이콘이 있습니다:
 
-* Icons associated with certain file extensions, like `.mp3`, `.png`, etc.
-* Icons inside the file itself, like `.exe`, `.dll`, `.ico`.
+* `.mp3`, `.png`등과 같이 특정 파일 확장명과 관련된 아이콘
+* `.exe`, `.dll`, `.ico`와 같이 파일 안에 있는 아이콘.
 
-On *Linux* and *macOS*, icons depend on the application associated with file mime type.
+*Linux*와 *macOS*에서 아이콘은 mime type과 관련된 어플리케이션에 따라 다릅니다.
 
 ### `app.setPath(name, path)`
 

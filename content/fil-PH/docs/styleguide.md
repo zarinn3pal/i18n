@@ -1,4 +1,4 @@
-# Styleguide ng mga dokumento ng elektron
+# Electron Documentation Style Guide
 
 Ito ang mga alintuntunin sa pagsulat ng dokumento ng elektron.
 
@@ -94,7 +94,7 @@ Gamit ang `Session`at`Cookies`classes bilang halimbawa:
 
 ### session.fromPartition(partition)
 
-## Properties
+## Static Properties
 
 ### session.defaultSession
 

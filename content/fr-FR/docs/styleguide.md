@@ -106,31 +106,31 @@ En prenant les classes `Session` et `Cookies` comme exemple :
 ```markdown
 # session
 
-## Methods
+## Méthodes
 
 ### session.fromPartition(partition)
 
-## Properties
+## Propriétés Statiques
 
 ### session.defaultSession
 
-## Class: Session
+## Classe : Session
 
-### Instance Events
+### Événements d'instance
 
-#### Event: 'will-download'
+#### Événement : 'will-download'
 
-### Instance Methods
+### Méthodes d'instance
 
 #### `ses.getCacheSize()`
 
-### Instance Properties
+### Propriétés d'instance
 
 #### `ses.cookies`
 
-## Class: Cookies
+## Classe : Cookies
 
-### Instance Methods
+### Méthodes d'instance
 
 #### `cookies.get(filter, callback)`
 ```

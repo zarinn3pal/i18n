@@ -13,7 +13,7 @@ Vea [`Menú`](menu.md) para obtener ejemplos.
     * `menuItem` MenuItem
     * `browserWindow` [BrowserWindow](browser-window.md)
     * `event` Event
-  * `role` String (opcional) - Puede ser `undo`, `redo`, `cut`, `copy`, `paste`, `pasteandmatchstyle`, `delete`, `selectall`, `reload`, `forcereload`, `toggledevtools`, `resetzoom`, `zoomin`, `zoomout`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideothers`, `unhide`, `quit`, `startspeaking`, `stopspeaking`, `close`, `minimize`, `zoom` or `front` - Definir la acción del elemento del menú e ignorar la propiedad `click`. Ver [roles](#roles).
+  * `role` String (opcional) - Puede ser `undo`, `redo`, `cut`, `copy`, `paste`, `pasteandmatchstyle`, `delete`, `selectall`, `reload`, `forcereload`, `toggledevtools`, `resetzoom`, `zoomin`, `zoomout`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideothers`, `unhide`, `quit`, `startspeaking`, `stopspeaking`, `close`, `minimize`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu` o `windowMenu` - Define la acción del elemento del menú, cuando sea especificada la propiedad `clic` será ignorada. Ver [roles](#roles).
   * `type` String (opcional) - Puede ser `normal`, `separador`, `submenu`, `checkbox` o `radio`.
   * `label` String (opcional)
   * `sublabel` String (opcional)
@@ -95,6 +95,46 @@ Al especificar un `role` en macOS, `label` y `accelerator` son las únicas opcio
 
 Las siguientes propiedades están disponibles en instancias del `menú de elementos`:
 
+#### `menuItem.id`
+
+Un `String` indicando la etiqueta visible del elemento, esta propiedad puede ser cambiada dinámicamente.
+
+#### `menuItem.label`
+
+Un `String` indicando la etiqueta visible del elemento, esta propiedad puede ser cambiada dinámicamente.
+
+#### `menuItem.click`
+
+Un `Función` que se activa cuando el MenuItem recibe un evento de clic. Puede ser llamado con `menuItem.click(event, focusedWindow, focusedWebContents)`.
+
+* `event` Evento
+* `focusedWindow` [BrowserWindow](browser-window.md)
+* `focusedWebContents` [WebContents](web-contents.md)
+
+#### `menuItem.submenu`
+
+Un `Menú` (opcional) que contiene el submenú del menú elemento, si está presente.
+
+#### `menuItem.type`
+
+Un `String` indicando el tipo del elemento.
+
+#### `menuItem.role`
+
+Una `String` (opcional) indicando el rol del elemento, si está establecido. Puede ser `undo`, `redo`, `cut`, `copy`, `paste`, `pasteandmatchstyle`, `delete`, `selectall`, `reload`, `forcereload`, `toggledevtools`, `resetzoom`, `zoomin`, `zoomout`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideothers`, `unhide`, `quit`, `startspeaking`, `stopspeaking`, `close`, `minimize`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu` o `windowMenu`
+
+#### `menuItem.accelerator`
+
+Un `String` (opcional) indicando el rol del elemento, si está establecido.
+
+#### `menuItem.icon`
+
+Una `NativeImage | String` (opcional) indicando el icono del elemento, si estuviera establecido.
+
+#### `menuItem.sublabel`
+
+Una `String` indicando la subetiqueta del artículo, esta propiedad puede ser cambiada dinámicamente.
+
 #### `menuItem.enabled`
 
 Un `booleano` indicando si el elementos está habilitado, esta propiedad puede ser cambiada dinámicamente.
@@ -113,10 +153,14 @@ Un elemento del menú `radio` que activará su propiedad `verificado` cuando se 
 
 Puede añadir la función `click` para comportamientos adicionales.
 
-#### `menuItem.label`
+#### `menuItem.registerAccelerator`
 
-Una `Cadena` Representando la etiqueta de los elementos visibles en el menú.
+Un `Boolean` indicando si el acelerador debe ser registrado con el sistema o simplemente mostrado, esta propiedad puede ser cambiada dinámicamente.
 
-#### `menuItem.click`
+#### `menuItem.commandId`
 
-Una `función` que se desencadena cuando los elementos del menú reciben un evento click.
+Un `Number` indicando el id único secuencial de un elemento.
+
+#### `menuItem.menu`
+
+Un `Menu` del cual el elemento es parte.
