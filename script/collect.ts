@@ -216,7 +216,6 @@ async function fetchAPIDocsFromSupportedVersions() {
   console.log('Fetching API docs from suppored branches')
 
   for (const version of packageJson.supportedVersions) {
-    if (version.includes('5-0-x')) continue
     console.log(`  - from electron/electron#${version}`)
     const docs = await electronDocs(version)
 
@@ -302,7 +301,6 @@ async function fetchTutorialsFromSupportedBranch() {
   console.log(`Fetching tutorial docs from supported branches`)
 
   for (const version of packageJson.supportedVersions) {
-    if (version.includes('5-0-x')) continue
     console.log(`  - from electron/electron#${version}`)
     const docs = await electronDocs(version)
 
