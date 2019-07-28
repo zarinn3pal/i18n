@@ -232,9 +232,8 @@ function splitMd(md) {
   return sections
 }
 
-async function main() {
-  const docs = await parseCurrentDocs()
-  const docsByLocale = Object.keys(locales).reduce((acc, locale) => {
+const createDocsByLocales = (docs) => {
+  return Object.keys(locales).reduce((acc, locale) => {
     acc[locale] = docs
       .filter(doc => doc.locale === locale)
       .sort((a, b) => a.slug.localeCompare(b.slug))
@@ -245,45 +244,20 @@ async function main() {
 
     return acc
   }, {})
+}
+
+async function main() {
+  const docs = await parseCurrentDocs()
+  const docsByLocale = createDocsByLocales(docs)
 
   const betaDocs = await parseBetaVersion()
-  const betaVersionDocs = Object.keys(locales).reduce((acc, locale) => {
-    acc[locale] = betaDocs
-      .filter(doc => doc.locale === locale)
-      .sort((a, b) => a.slug.localeCompare(b.slug))
-      .reduce((allDocs, doc) => {
-        allDocs[doc.href] = doc
-        return allDocs
-      }, {})
-
-    return acc
-  }, {})
+  const betaVersionDocs = createDocsByLocales(betaDocs)
 
   const preEOLDocs = await parsePreEOLDocs()
-  const preEOLVersionDocs = Object.keys(locales).reduce((acc, locale) => {
-    acc[locale] = preEOLDocs
-      .filter(doc => doc.locale === locale)
-      .sort((a, b) => a.slug.localeCompare(b.slug))
-      .reduce((allDocs, doc) => {
-        allDocs[doc.href] = doc
-        return allDocs
-      }, {})
-
-    return acc
-  }, {})
+  const preEOLVersionDocs = createDocsByLocales(preEOLDocs)
 
   const beforeStableDocs = await parseBeforeStableVersion()
-  const beforeStableVersionDocs = Object.keys(locales).reduce((acc, locale) => {
-    acc[locale] = beforeStableDocs
-      .filter(doc => doc.locale === locale)
-      .sort((a, b) => a.slug.localeCompare(b.slug))
-      .reduce((allDocs, doc) => {
-        allDocs[doc.href] = doc
-        return allDocs
-      }, {})
-
-    return acc
-  }, {})
+  const beforeStableVersionDocs = createDocsByLocales(beforeStableDocs)
 
   const websiteStringsByLocale = Object.keys(locales).reduce((acc, locale) => {
     acc[locale] = require(`../content/current/${locale}/website/locale.yml`)
